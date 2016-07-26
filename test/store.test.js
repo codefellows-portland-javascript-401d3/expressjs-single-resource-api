@@ -35,8 +35,8 @@ describe(`storage functionality`, () => {
   });
 
   it(`gets information based on id`, (done) => {
-    let pathname = `/notes/1`;
-    store.getId(pathname, object => {
+    let id = 1;
+    store.getId(id, object => {
       assert.deepEqual(object, {name: `Mark`, id: 1});
       assert.equal(object.id, `1`);
       done();
@@ -44,7 +44,7 @@ describe(`storage functionality`, () => {
   });
 
   it(`deletes a resource from the storage`, (done) => {
-    let pathname = `/notes/0`;
+    let pathname = 0;
     store.del(pathname, (data) => {
       assert.deepEqual(data, [{name: `Mark`, id: 1}]);
       done();
@@ -52,7 +52,7 @@ describe(`storage functionality`, () => {
   });
 
   it(`changes a current object on put`, (done) => {
-    let pathname = `/notes/1`;
+    let pathname = 1;
     let fields = {name: `Superwoman`, id: 1};
     store.put(pathname, fields, data => {
       assert.deepEqual(data, [{name: `Superwoman`, id: 1}]);
