@@ -1,0 +1,34 @@
+{
+  "name": "expressjs-single-resource-api",
+  "version": "2.0.0",
+  "description": "This is an http server that will act as a data store, backed by in-memory storage objects.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "pretest": "npm run lint",
+    "start": "node index.js",
+    "test": "mocha",
+    "lint": "eslint **/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deeheber/expressjs-single-resource-api.git"
+  },
+  "author": "Danielle Heberling",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deeheber/expressjs-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/deeheber/expressjs-single-resource-api#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.1.1",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
