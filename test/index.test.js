@@ -1,13 +1,13 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const assert = chai.assert;
-const server = require('../lib/server');
+const app = require('../lib/app');
 
 chai.use(chaiHttp);
 
-describe('this api server', () => {
+describe('this app\'s api', () => {
 
-  const request = chai.request(server);
+  const request = chai.request(app);
 
   let testUser = { name: 'test-user3', security: 'low' };
   let testUser2 = { name: 'test-user4', security: 'low' };
@@ -17,7 +17,7 @@ describe('this api server', () => {
       .get('/badpath')
       .end((err, res) => {
         assert.ok(err);
-        assert.equal(res.statusCode, 400);
+        assert.equal(res.statusCode, 404);
         done();
       });
   });
@@ -28,7 +28,7 @@ describe('this api server', () => {
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
-        assert.equal(res.header['content-type'], 'application/json');
+        assert.include(res.header['content-type'], 'application/json');
         assert.include(res.text, 'GET /api/users');
         done();
       });
@@ -43,7 +43,7 @@ describe('this api server', () => {
         .end((err, res) => {
           if (err) return done(err);
           assert.equal(res.statusCode, 200);
-          assert.equal(res.header['content-type'], 'application/json');
+          assert.include(res.header['content-type'], 'application/json');
           let result = JSON.parse(res.text);
           testUser.id = result.id; // the only change to the data
           assert.equal(result.name, testUser.name);
@@ -57,7 +57,7 @@ describe('this api server', () => {
         .end((err, res) => {
           if (err) return done(err);
           assert.equal(res.statusCode, 200);
-          assert.equal(res.header['content-type'], 'application/json');
+          assert.include(res.header['content-type'], 'application/json');
           let result = JSON.parse(res.text);
           assert.deepEqual(result, testUser);
           testUser = result;
@@ -76,9 +76,9 @@ describe('this api server', () => {
         .send(testUser)
         .end((err, res) => {
           if (err) return done(err);
-          assert.equal(res.statusCode, 200);
-          assert.equal(res.header['content-type'], 'application/json');
           let result = JSON.parse(res.text);
+          assert.equal(res.statusCode, 200);
+          assert.include(res.header['content-type'], 'application/json');
           assert.equal(result.name, testUser.name);
           done();
         });
@@ -90,7 +90,7 @@ describe('this api server', () => {
         .end((err, res) => {
           if (err) return done(err);
           assert.equal(res.statusCode, 200);
-          assert.equal(res.header['content-type'], 'application/json');
+          assert.include(res.header['content-type'], 'application/json');
           let result = JSON.parse(res.text);
           assert.equal(result.name, testUser.name, res.text);
           done();
@@ -101,76 +101,79 @@ describe('this api server', () => {
 
   describe('/DELETE method removes data permenently', () => {
 
-    it('/POST method prep for get all', done => {
-      request
-        .post('/api/users')
-        .send(testUser2)
-        .end((err, res) => {
-          if (err) return done(err);
-          assert.equal(res.statusCode, 200);
-          assert.equal(res.header['content-type'], 'application/json');
-          let result = JSON.parse(res.text);
-          testUser2.id = result.id; // the only change to the data
-          assert.equal(result.name, testUser2.name);
-          done();
-        });
-    });
-
-    it('/GET on user root returns list', done => {
-      request
-        .get('/api/users')
-        .end((err, res) => {
-          if (err) return done(err);
-          assert.equal(res.statusCode, 200);
-          assert.equal(res.header['content-type'], 'application/json');
-          let result = JSON.parse(res.text);
-          assert.isAbove(result.length, 0);
-          done();
-        });
-    });
-  });
-
-  describe('/DELETE method removes data permenently', () => {
-
     it('/DELETE method removes user', done => {
       request
         .delete(`/api/users/${testUser.id}`)
         .end((err, res) => {
           if (err) return done(err);
           assert.equal(res.statusCode, 200);
-          assert.equal(res.header['content-type'], 'application/json');
+          assert.include(res.header['content-type'], 'application/json');
           let result = JSON.parse(res.text);
           assert.deepEqual(result, testUser);
           done();
         });
     });
 
-    it('/GET on recently deleted user returns fail message', done => {
+    it('/GET on recently deleted user returns fail status', done => {
       request
         .get(`/api/users/${testUser.id}`)
         .end((err, res) => {
-          if (err) return done(err);
-          assert.equal(res.statusCode, 200);
-          assert.equal(res.header['content-type'], 'application/json');
-          let result = JSON.parse(res.text);
-          assert.deepEqual(result,{});
+          // error is intended
+          assert.equal(res.statusCode, 500);
           done();
         });
     });
 
   });
 
+  describe('/GET on root returns list', () => {
+
+    before( done => {
+      request
+        .post('/api/users')
+        .send(testUser)
+        .end((err, res) => {
+          if (err) return done(err);
+          let result = JSON.parse(res.text);
+          testUser = result;
+          request
+            .post('/api/users')
+            .send(testUser2)
+            .end((err, res) => {
+              if (err) return done(err);
+              let result = JSON.parse(res.text);
+              testUser2 = result;
+              done();
+            });
+        });
+    });
+
+    it('/GET on root route returns all', done => {
+      request
+        .get('/api/users')
+        .end((err, res) => {
+          if (err) return done(err);
+          assert.equal(res.statusCode, 200);
+          assert.include(res.header['content-type'], 'application/json');
+          let result = JSON.parse(res.text);
+          assert.isAbove(result.length, 1);
+          done();
+        });
+    });
+  });
+
   // cleanup
   after( done => {
     request
-      .delete(`/api/users/${testUser2.id}`)
-      .end((err, res) => {
-        if (err) return done(err);
-        assert.equal(res.statusCode, 200);
-        assert.equal(res.header['content-type'], 'application/json');
-        let result = JSON.parse(res.text);
-        assert.deepEqual(result, testUser2);
-        done();
+      .delete(`/api/users/${testUser.id}`)
+      .end( err => {
+        if (err) done(err);
+        request
+          .delete(`/api/users/${testUser2.id}`)
+          .end( err => {
+            if (err) done(err);
+            done();
+          });
       });
   });
 

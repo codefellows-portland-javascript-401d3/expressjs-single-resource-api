@@ -1,7 +1,10 @@
-const server = require('./lib/server');
+const http = require('http');
+const app = require('./lib/app');
 
 const port = process.env.PORT || 3000;
 
-server.listen(port, () => {
-  console.log('App is running on ' + port);
+const server = http.createServer( app );
+
+server.listen( port, () => {
+  console.log('server running at', server.address());
 });
