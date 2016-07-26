@@ -1,0 +1,25 @@
+{
+  "name": "expressjs-single-resource-api",
+  "version": "1.0.0",
+  "description": "A simple HTTP server utilizing Express",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CharlesEmrich/expressjs-single-resource-api.git"
+  },
+  "author": "Charles Emrich <charles.emrich@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CharlesEmrich/expressjs-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/CharlesEmrich/expressjs-single-resource-api#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "express": "^4.14.0",
+    "mocha": "^2.5.3"
+  }
+}
