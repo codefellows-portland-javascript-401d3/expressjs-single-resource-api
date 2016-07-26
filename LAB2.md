@@ -19,7 +19,7 @@ Testing:
 * Existing e2e API tests should handle the addition of this middleware, though 
 you may need to modify based on consistent error handling.
 
-Body-parser and error handler middleware should be united tested as pure functions.
+* Body-parser and error handler middleware should be united tested as pure functions.
 
 ## Rubric
   * Body Parser: 3pts
