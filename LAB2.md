@@ -23,6 +23,7 @@ you may need to modify based on consistent error handling.
 
 ## Bonus
 * Unit test error handler **2pts**
+* Move resource methods to own express.Router() **2pts**
 
 ## Rubric
   * Body Parser: 3pts
