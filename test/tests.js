@@ -87,6 +87,7 @@ describe('HTTP server api', function(done) {
       .get('/nonsense')
       .end((err, res) => {
         // console.log(res.body);
+        // console.log(err);
         console.log(res.status);
         // console.log('What Happened: ', err);
         done();
