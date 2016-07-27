@@ -1,6 +1,6 @@
 {
   "name": "cf401-lab08-expressjs-single-resource-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Code Fellows 401 Project",
   "main": "index.js",
   "scripts": {
