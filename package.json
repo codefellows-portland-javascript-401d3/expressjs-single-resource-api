@@ -1,0 +1,32 @@
+{
+  "name": "cf401-lab08-expressjs-single-resource-api",
+  "version": "1.0.0",
+  "description": "Code Fellows 401 Project",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "eslint **/*.js",
+    "test": "mocha",
+    "watch": "mocha -w",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeoffreyEmerson/cf401-lab08-expressjs-single-resource-api.git"
+  },
+  "author": "Geoffrey Emerson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GeoffreyEmerson/cf401-lab08-expressjs-single-resource-api.git/issues"
+  },
+  "homepage": "https://github.com/GeoffreyEmerson/cf401-lab08-expressjs-single-resource-api.git#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.1.1",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "test-data-store": "^0.1.0"
+  }
+}
