@@ -2,7 +2,7 @@
 ====
 
 Turn your existing app into one that's backed by Mongo using Mongoose.
-Add a second related resource (for example, `/users` and `/birds`).
+Add a second resource (for example, `/users` and `/birds`).
 
 Recommend using Mongoose promise API
 
