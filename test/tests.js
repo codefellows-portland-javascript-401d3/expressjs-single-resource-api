@@ -11,18 +11,19 @@ describe('HTTP server api', function(done) {
 
   it('is able to create records', function(done) {
     request
-    .post('/api/?data=foobarbaz')
-    .end((err, res) => {
+    .post('/api/')
+    .send({data: 'foobarbaz'})
+    .end((err) => {
       if (err) return done(err);
-    })
-    .then(
-    request
-    .post('/api/?data=barfoobaz')
-    .end((err, res) => {
-      if (err) return done(err);
-      assert.deepEqual(JSON.parse(res.text), {id:2,data:'barfoobaz'});
-      done();
-    }));
+      request
+      .post('/api/')
+      .send({data: 'barfoobaz'})
+      .end((err, res) => {
+        if (err) return done(err);
+        assert.deepEqual(JSON.parse(res.text), {id:2,data:{data:'barfoobaz'}});
+        done();
+      });
+    });
   });
 
   it('is able to get all records', function(done) {
@@ -30,7 +31,8 @@ describe('HTTP server api', function(done) {
     .get('/')
     .end((err, res) => {
       if (err) return done(err);
-      assert.deepEqual(JSON.parse(res.text), [ { id: 1, data: 'foobarbaz' }, { id: 2, data: 'barfoobaz' } ]);
+      // console.log(JSON.parse(res.text));
+      assert.deepEqual(JSON.parse(res.text), [ { id: 1, data: { data: 'foobarbaz' } }, { id: 2, data: { data:'barfoobaz' } } ]);
       done();
     });
   });
@@ -41,17 +43,18 @@ describe('HTTP server api', function(done) {
     .end((err, res) => {
       if (err) return done(err);
       // console.log((res));
-      assert.deepEqual(JSON.parse(res.text), { id: 2, data: 'barfoobaz' });
+      assert.deepEqual(JSON.parse(res.text), { id: 2, data: { data:'barfoobaz' } });
       done();
     });
   });
 
   it('is able to update a record', function(done) {
     request
-    .put('/api/1/?data=kerfuffle')
+    .put('/api/1/')
+    .send({data: 'kerfuffle'})
     .end((err, res) => {
       if (err) return done(err);
-      assert.deepEqual(res.text, 'kerfuffle');
+      assert.deepEqual(JSON.parse(res.text), { id: 1, data: {data: 'kerfuffle' }});
       done();
     });
   });
@@ -62,8 +65,33 @@ describe('HTTP server api', function(done) {
     .end((err, res) => {
       if (err) return done(err);
       // console.log(res.text);
-      assert.deepEqual(JSON.parse(res.text), [{'id':2, data:'barfoobaz'}]);
+      assert.deepEqual(JSON.parse(res.text), [{'id':2, data: { data: 'barfoobaz'}}]);
       done();
+    });
+  });
+
+  describe('handler unit tests', function() {
+    //Is there a way to do this test more directly on bodyParser. I couldn't figure out a method except building a Dummy Event Emitter.
+    it('bodyParser parses JSON', () => {
+      request
+      .post('/api/')
+      .send({foo: 'bar'})
+      .end((err, res) => {
+        assert.deepEqual(JSON.parse(res.text), [{'id':3, data: { foo: 'bar'}}]);
+        done();
+      });
+    });
+
+    it('errorhandler fires on junk requests', (done) => {
+      request
+      .get('/nonsense')
+      .end((err, res) => {
+        // console.log(res.body);
+        // console.log(err);
+        console.log(res.status);
+        // console.log('What Happened: ', err);
+        done();
+      });
     });
   });
 });
