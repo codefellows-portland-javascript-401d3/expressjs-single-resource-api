@@ -71,20 +71,25 @@ describe('HTTP server api', function(done) {
   });
 
   describe('handler unit tests', function() {
-    // it('bodyParser parses JSON', (done) => {
-    //   request
-    //   .send();
-    // });
-
-    it('errorhandler fires on junk requests', (done) => {
+    it('bodyParser parses JSON', () => {
       request
-      .get('/nonsense')
+      .post('/api/')
+      .send({foo: 'bar'})
       .end((err, res) => {
-        // console.log(res.body);
-        console.log(res.status);
-        // console.log('What Happened: ', err);
+        assert.deepEqual(JSON.parse(res.text), [{'id':3, data: { foo: 'bar'}}]);
         done();
       });
     });
+
+    // it('errorhandler fires on junk requests', (done) => {
+    //   request
+    //   .get('/nonsense')
+    //   .end((err, res) => {
+    //     // console.log(res.body);
+    //     console.log(res.status);
+    //     // console.log('What Happened: ', err);
+    //     done();
+    //   });
+    // });
   });
 });
