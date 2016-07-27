@@ -71,6 +71,7 @@ describe('HTTP server api', function(done) {
   });
 
   describe('handler unit tests', function() {
+    //Is there a way to do this test more directly on bodyParser. I couldn't figure out a method except building a Dummy Event Emitter.
     it('bodyParser parses JSON', () => {
       request
       .post('/api/')
@@ -81,15 +82,15 @@ describe('HTTP server api', function(done) {
       });
     });
 
-    // it('errorhandler fires on junk requests', (done) => {
-    //   request
-    //   .get('/nonsense')
-    //   .end((err, res) => {
-    //     // console.log(res.body);
-    //     console.log(res.status);
-    //     // console.log('What Happened: ', err);
-    //     done();
-    //   });
-    // });
+    it('errorhandler fires on junk requests', (done) => {
+      request
+      .get('/nonsense')
+      .end((err, res) => {
+        // console.log(res.body);
+        console.log(res.status);
+        // console.log('What Happened: ', err);
+        done();
+      });
+    });
   });
 });
