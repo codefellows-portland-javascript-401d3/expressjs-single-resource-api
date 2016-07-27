@@ -1,5 +1,7 @@
 #Express Routing for the existing data storage
 
+##Refactored to modularize routing using Express.Router();
+
 ##Codefellows 401d3
 
 ###Aaron Bini - 07/26/2016

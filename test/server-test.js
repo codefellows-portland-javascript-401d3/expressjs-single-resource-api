@@ -15,79 +15,67 @@ describe('express routes and http verbs testing', () => {
         expect(res.text).to.have.string('Simple Movie Storage');
         done();
       })
-      .catch((err) => {
-        return done(err);
-      });
+      .catch(done);
   });
 
   it('GETS all movies', (done) => {
     req.get('/movies')
       .then((res) => {
-        assert.deepEqual('application/json; charset=utf-8', res.headers['content-type']);
+        assert.equal('application/json; charset=utf-8', res.headers['content-type']);
         expect(res).to.have.status(200);
-        expect(res.text).to.have.string('Movies successfully retrieved.');
+        expect(res.text).to.have.string('Items successfully retrieved.');
         done();
       })
-      .catch((err) => {
-        return done(err);
-      });
+      .catch(done);
   });
 
   it('GETS one movie', (done) => {
     req.get('/movies/0')
       .then((res) => {
-        assert.deepEqual('application/json; charset=utf-8', res.headers['content-type']);
+        assert.equal('application/json; charset=utf-8', res.headers['content-type']);
         expect(res).to.have.status(200);
-        expect(res.text).to.have.string('Movie successfully retrieved.');
+        expect(res.text).to.have.string('Item successfully retrieved.');
         done();
       })
-      .catch((err) => {
-        return done(err);
-      });
+      .catch(done);
   });
 
   it('POSTS a movie', (done) => {
     req.post('/movies')
       .send({title: 'A Few Good Men', year: 1990})
       .then((res) => {
-        assert.deepEqual('application/json; charset=utf-8', res.headers['content-type']);
+        assert.equal('application/json; charset=utf-8', res.headers['content-type']);
         expect(res).to.have.status(200);
-        expect(res.text).to.have.string('Movie successfully added.');
+        expect(res.text).to.have.string('Item successfully added.');
         done();
       })
-      .catch((err) => {
-        return done(err);
-      });
+      .catch(done);
   });
 
   it('replaces one movie with PUT', (done) => {
     req.put('/movies/1')
       .send({title: 'Test Movie', 'year': 1986})
       .then((res) => {
-        assert.deepEqual('application/json; charset=utf-8', res.headers['content-type']);
+        assert.equal('application/json; charset=utf-8', res.headers['content-type']);
         expect(res).to.have.status(200);
-        expect(res.text).to.have.string('Movie successfully updated.');
+        expect(res.text).to.have.string('Item successfully updated.');
         done();
-      }).catch((err) => {
-        return done(err);
-      });
+      }).catch(done);
   });
 
   it('DELETES a movie', (done) => {
-    req.delete('/movies/2')
+    req.delete('/movies/0')
       .then((res) => {
-        assert.deepEqual('application/json; charset=utf-8', res.headers['content-type']);
+        assert.equal('application/json; charset=utf-8', res.headers['content-type']);
         expect(res).to.have.status(200);
-        expect(res.text).to.have.string('Movie successfully deleted.');
+        expect(res.text).to.have.string('Item successfully deleted.');
         done();
       })
-      .catch((err) => {
-        return done(err);
-      });
+      .catch(done);
   });
 
   it('404s on bad route', (done) => {
-    req.get('/failing')
+    req.get('/movies/failing/wrong')
       .end((err, res) => {
         expect(res).to.have.status(404);
         done();
