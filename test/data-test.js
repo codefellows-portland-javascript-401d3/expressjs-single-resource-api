@@ -1,78 +1,85 @@
 const chai = require('chai');
-const expect = chai.expect;
 const assert = chai.assert;
 const DataStore = require('../lib/models/data-store');
 
 const store = new DataStore();
 
 describe('data storage module', () => {
+  before((done) => {
+    store.add({title: 'Ghost Busters', year: 1984})
+    .then((movie) => {
+      assert.isOk(store.items.length === 1);
+      assert.equal('Item successfully added.', movie.message);
+      done();
+    }).catch(done);
+  });
 
   it('gets all stored items', (done) => {
     store.getAll()
       .then((movies) => {
-        assert.deepEqual('Movies successfully retrieved.', movies.message);
+        assert.equal('Items successfully retrieved.', movies.message);
         done();
-      }).catch(err => console.log(err));
+      }).catch(done);
   });
 
   it('gets one stored item', (done) => {
     store.getOne(0)
       .then((movie) => {
-        assert.deepEqual('Movie successfully retrieved.', movie.message);
+        assert.equal('Item successfully retrieved.', movie.message);
         done();
-      }).catch(err => console.log(err));
+      }).catch(done);
   });
 
   it('errors when the GET request yields no item', (done) => {
     store.getOne(1)
       .then(movie => movie)
       .catch((err) => {
-        assert.deepEqual('Movie not found.', err.message);
+        assert.equal('Item not found.', err.message);
         done();
       });
   });
 
   it('adds a new item', (done) => {
-    store.addMovie({title: 'The Godfather', year: 1973})
+    store.add({title: 'The Godfather', year: 1973})
       .then((movie) => {
-        assert.isOk(store.movies.length === 2);
-        assert.deepEqual('Movie successfully added.', movie.message);
+        assert.isOk(store.items.length === 2);
+        assert.equal('Item successfully added.', movie.message);
         done();
-      }).catch(err => console.log(err));
+      }).catch(done);
   });
 
   it('replaces an item with a new item', (done) => {
-    store.changeMovie(1, {title: 'The Catfather', year: 2016})
+    store.change(1, {title: 'The Catfather', year: 2016})
       .then((movie) => {
-        assert.isOk(store.movies.length === 2);
-        assert.deepEqual('Movie successfully updated.', movie.message);
+        assert.isOk(store.items.length === 2);
+        assert.equal('Item successfully updated.', movie.message);
         done();
       });
   });
 
   it('errors when the PUT request item to replace is not found', (done) => {
-    store.changeMovie(5, {title: 'Raising Arizona', year: 1987})
+    store.change(5, {title: 'Raising Arizona', year: 1987})
       .then(movie => movie)
       .catch((err) => {
-        assert.deepEqual('Movie not found.', err.message);
+        assert.equal('Item not found.', err.message);
         done();
       });
   });
 
   it('deletes an item', (done) => {
-    store.deleteMovie(2)
+    store.delete(1)
       .then((movie) => {
-        assert.isOk(store.movies.length === 2);
-        assert.deepEqual('Movie successfully deleted.', movie.message);
+        assert.isOk(store.items.length === 1);
+        assert.equal('Item successfully deleted.', movie.message);
         done();
-      });
+      }).catch(done);
   });
 
   it('errors when the DELETE request item to be deleted is not found', (done) => {
-    store.deleteMovie(7)
+    store.delete(7)
       .then(movie => movie)
       .catch((err) => {
-        assert.deepEqual('Movie not found.', err.message);
+        assert.equal('Item not found.', err.message);
         done();
       });
   });
