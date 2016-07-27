@@ -33,26 +33,7 @@ describe(`server e2e testing`, () => {
       .post(`/notes`)
       .end((err, res) => {
         assert.equal(res.status, 200);
-        assert.deepEqual(res.body, [{id: 0}]);
-        done();
-      });
-  });
-
-  it(`tests getting a resource by id`, done => {
-    request
-      .get(`/notes`)
-      .end((err, res) => {
-        assert.deepEqual(res.status, 200);
-        assert.deepEqual(res.body, [{id: 0}]);
-        done();
-      });
-  });
-
-  it(`tests delete req to /notes`, done => {
-    request
-      .del(`/notes`)
-      .end((err, res) => {
-        assert.equal(res.status, 200);
+        assert.deepEqual(res.body, {id: 0});
         done();
       });
   });
@@ -61,9 +42,28 @@ describe(`server e2e testing`, () => {
     request
       .put(`/notes/:id`)
       .end((err, res) => {
-        assert.equal(res.status, 200);
+        assert.equal(err, null);
         done();
       });
   });
+
+  it(`tests getting a resource by id`, done => {
+    request
+      .get(`/notes/:id`)
+      .end((err, res) => {
+        assert.equal(err, null);
+        done();
+      });
+  });
+
+  it(`tests delete req to /notes`, done => {
+    request
+      .del(`/notes/:id`)
+      .end((err, res) => {
+        assert.equal(err, null);
+        done();
+      });
+  });
+
 
 });
