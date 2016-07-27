@@ -1,0 +1,33 @@
+{
+  "name": "expressjs-single-resource-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "http": "0.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha",
+    "lint": "eslint",
+    "watch": "eslint mocha -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katesowles/expressjs-single-resource-api.git"
+  },
+  "author": "Kate Sowles <katesowles@gmail.com> (http://katesowles.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/katesowles/expressjs-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/katesowles/expressjs-single-resource-api#readme"
+}
