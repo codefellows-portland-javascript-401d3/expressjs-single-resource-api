@@ -4,17 +4,21 @@
   "description": "",
   "main": "index.js",
   "directories": {
-    "test": "mocha"
+    "test": "test"
   },
   "dependencies": {
     "express": "^4.14.0",
     "http": "0.0.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^2.5.3"
   },
   "scripts": {
-    "test": "mocha"
+    "start": "node index.js",
+    "test": "mocha",
+    "lint": "eslint",
+    "watch": "eslint mocha -w"
   },
   "repository": {
     "type": "git",
