@@ -9,11 +9,11 @@ This is an http server that acts as a simple data store, backed by in-memory sto
 3. enter a possible call from below
 
 ### Possible calls with current data
-- `GET`/notes returns all notes
-- `GET`/notes/:idNumber returns the note that has that id if it exists
-- `POST`/notes adds a valid JSON object to notes
-- `PUT`/notes/:idNumber updates the selected note if valid JSON
-- `DELETE`/notes/:idNumber deletes the selected notes
+- `GET`/api/notes returns all notes
+- `GET`/api/notes/:idNumber returns the note that has that id if it exists
+- `POST`/api/notes adds a valid JSON object to notes
+- `PUT`/api/notes/:idNumber updates the selected note if valid JSON
+- `DELETE`/api/notes/:idNumber deletes the selected notes
 
 also works if you replace `notes` with `books` i.e. `GET`/books returns all books
 

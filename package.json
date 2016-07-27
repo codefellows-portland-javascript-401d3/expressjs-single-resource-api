@@ -1,13 +1,12 @@
 {
   "name": "expressjs-single-resource-api",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "This is an http server that will act as a data store, backed by in-memory storage objects.",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "pretest": "npm run lint",
     "start": "node index.js",
     "test": "mocha",
     "lint": "eslint **/*.js"

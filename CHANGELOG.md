@@ -1,6 +1,12 @@
 # Change log
 All notable changes to this project will be documented in this file
 
+## 2.1.0 - 2016-07-26
+Added
+- Middleware for error handling
+- Middleware for incoming JSON data on PUT and POST requests
+- Routes seperate from the main app
+
 ## 2.0.0 - 2016-07-25
 Added
 - POST, PUT, DELETE options

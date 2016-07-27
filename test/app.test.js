@@ -1,17 +1,17 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const assert = require('chai').assert;
-const server = require('../lib/server');
+const app = require('../lib/app');
 const data = require('../data');
 
 chai.use(chaiHttp);
 
-describe('server', ()=>{
+describe('app', ()=>{
 
-  const request = chai.request(server);
+  const request = chai.request(app);
 
   it('gets all notes', done=>{
-    request.get('/notes')
+    request.get('/api/notes')
       .end((error, response)=>{
         if(error)return done(error);
         assert.equal(response.text, JSON.stringify(data.notes));
@@ -20,7 +20,7 @@ describe('server', ()=>{
   });
 
   it('gets note 1', done=>{
-    request.get('/notes/1')
+    request.get('/api/notes/1')
       .end((error, response)=>{
         if(error)return done(error);
         assert.equal(response.text, JSON.stringify(data.notes[0]));
@@ -29,7 +29,7 @@ describe('server', ()=>{
   });
 
   it('errors on a note id that is not a number', done=>{
-    request.get('/notes/foo')
+    request.get('/api/notes/foo')
       .end((error)=>{
         assert.equal(error.status, 400);
         done();
@@ -37,7 +37,7 @@ describe('server', ()=>{
   });
 
   it('errors on a note that does not exist', done=>{
-    request.get('/notes/400')
+    request.get('/api/notes/400')
       .end((error)=>{
         assert.equal(error.status, 400);
         done();
@@ -45,7 +45,7 @@ describe('server', ()=>{
   });
 
   it('Error 400 on invalid category', done=>{
-    request.get('/fakepage')
+    request.get('/api/fakecategory')
       .end((error)=>{
         assert.equal(error.status, 400);
         done();
@@ -53,7 +53,7 @@ describe('server', ()=>{
   });
 
   it('Error 400 on invalid item', done=>{
-    request.get('/fakepage/23')
+    request.get('/api/fakecategory/23')
       .end((error)=>{
         assert.equal(error.status, 400);
         done();
@@ -61,7 +61,7 @@ describe('server', ()=>{
   });
 
   it('Error 404 on PUT request for an entire category', done=>{
-    request.put('/notes')
+    request.put('/api/notes')
       .end((error)=>{
         assert.equal(error.status, 404);
         done();
