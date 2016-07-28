@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const assert = chai.assert;
 const app = require('../lib/app');
+require( '../lib/mongoose-setup' );
 
 chai.use(chaiHttp);
 
@@ -9,8 +10,8 @@ describe('this app\'s api', () => {
 
   const request = chai.request(app);
 
-  let testUser = { name: 'test-user3', security: 'low' };
-  let testUser2 = { name: 'test-user4', security: 'low' };
+  let testUser = { name: 'test-user3', type: 'low' };
+  let testUser2 = { name: 'test-user4', type: 'low' };
 
   it('returns 404 for bad path', done => {
     request
@@ -45,7 +46,8 @@ describe('this app\'s api', () => {
           assert.equal(res.statusCode, 200);
           assert.include(res.header['content-type'], 'application/json');
           let result = JSON.parse(res.text);
-          testUser.id = result.id; // the only change to the data
+          testUser._id = result._id;
+          testUser.__v = result.__v;
           assert.equal(result.name, testUser.name);
           done();
         });
@@ -53,7 +55,7 @@ describe('this app\'s api', () => {
 
     it('/GET on user id returns user data', done => {
       request
-        .get(`/api/users/${testUser.id}`)
+        .get(`/api/users/${testUser._id}`)
         .end((err, res) => {
           if (err) return done(err);
           assert.equal(res.statusCode, 200);
@@ -66,16 +68,21 @@ describe('this app\'s api', () => {
     });    
 
 // bad json throws errors before testing can happen    
-//     it('/POST method gives error with bad json in request', done => {
-//       request
-//         .post('/api/users')
-//         .send('{"invalid"}')
-//         .end((err, res) => {
-//           if (err) return done(err);
-//           assert.equal(res.statusCode, 500);
-//           done();
-//         });
-//     });
+    it('/POST method gives error with bad json in request', done => {
+      request
+        .post('/api/users')
+        .send('{"invalid"}')
+        .end( (err,res) => {
+          if(err) {
+            let error = JSON.parse(err.response.text);
+            assert.equal(error.status, 400);
+            assert.include(error.message, 'problem parsing');
+            return done();
+          } else {
+            return done(res);
+          }
+        });
+    });
 
   });
 
@@ -83,23 +90,25 @@ describe('this app\'s api', () => {
 
     it('/PUT method completes successfully', done => {
       testUser.name = 'test-put';
+      const putUrl = `/api/users/${testUser._id}`;
       request
-        .put(`/api/users/${testUser.id}`)
+        .put(putUrl)
         .send(testUser)
         .end((err, res) => {
           if (err) return done(err);
           let result = JSON.parse(res.text);
           assert.equal(res.statusCode, 200);
           assert.include(res.header['content-type'], 'application/json');
-          assert.equal(result.name, testUser.name);
+          assert.equal(result.name, testUser.name, JSON.stringify(result));
           done();
         });
     });
 
     it('/GET on recently updated user returns correct changes', done => {
       request
-        .get(`/api/users/${testUser.id}`)
+        .get(`/api/users/${testUser._id}`)
         .end((err, res) => {
+
           if (err) return done(err);
           assert.equal(res.statusCode, 200);
           assert.include(res.header['content-type'], 'application/json');
@@ -115,7 +124,7 @@ describe('this app\'s api', () => {
 
     it('/DELETE method removes user', done => {
       request
-        .delete(`/api/users/${testUser.id}`)
+        .delete(`/api/users/${testUser._id}`)
         .end((err, res) => {
           if (err) return done(err);
           assert.equal(res.statusCode, 200);
@@ -126,12 +135,11 @@ describe('this app\'s api', () => {
         });
     });
 
-    it('/GET on recently deleted user returns fail status', done => {
+    it('/GET on recently deleted user returns no data', done => {
       request
-        .get(`/api/users/${testUser.id}`)
+        .get(`/api/users/${testUser._id}`)
         .end((err, res) => {
-          // error is intended
-          assert.equal(res.statusCode, 500);
+          assert.equal(res.header['content-length'], 0);
           done();
         });
     });
@@ -177,14 +185,14 @@ describe('this app\'s api', () => {
   // cleanup
   after( done => {
     request
-      .delete(`/api/users/${testUser.id}`)
+      .delete(`/api/users/${testUser._id}`)
       .end( err => {
         if (err) done(err);
         request
-          .delete(`/api/users/${testUser2.id}`)
+          .delete(`/api/users/${testUser2._id}`)
           .end( err => {
             if (err) done(err);
-            done();
+            done(); 
           });
       });
   });
