@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const connection = require( '../lib/mongoose-setup' );
 const app = require( '../lib/app' );
 
-describe(`users`, () => {
+describe(`bikes`, () => {
 
   before(done => {
     mongoose.connect('mongodb://localhost/user', () => {
@@ -17,30 +17,40 @@ describe(`users`, () => {
   });
 
   const request = chai.request(app);
-
-  const sample = "name: Arielle";
+  const sample = `make=Pake&model=RumRunner`;
   let sample2 = {};
 
   it(`gets all`, done => {
     request
-      .get(`/notes`)
+      .get(`/bikes`)
       .then(res => {
         assert.deepEqual(res.body, []);
+        assert.equal(res.status, 200);
         done();
       })
       .catch(done);
   });
 
-
   it(`adds user to the db`, done => {
     request
-      .post(`/notes`)
-      .send(`name: Arielle`)
+      .post(`/bikes`)
+      .send(sample)
       .then(res => {
-        const user = res.body;
+        const bike = res.body;
+        sample2 = bike;
         assert.equal(res.status, 200);
-        assert.ok(user._id);
-        sample2 = user;
+        assert.equal(res.body.make, `Pake`);
+        assert.equal(res.body.model, `RumRunner`);
+        done();
+      })
+      .catch(done);
+  });
+
+  it(`it gets the number of bikes in the db`, done => {
+    request
+      .get(`/bikes/number`)
+      .then(res => {
+        assert.deepEqual(res.body, {msg: `1 total bikes saved`});
         done();
       })
       .catch(done);
@@ -48,23 +58,25 @@ describe(`users`, () => {
 
   it(`gets a user by id`, done => {
     request 
-      .get(`/notes/${sample2._id}`)
+      .get(`/bikes/${sample2._id}`)
       .then(res => {
-        let user = res.body;
-        assert.deepEqual(user._id, sample2._id);
+        let bike = res.body;
+        assert.deepEqual(bike._id, sample2._id);
+        assert.deepEqual(bike, sample2);
         done();
       })
       .catch(done);
   });
 
-  it(`changes a user's name`, done => {
+  it(`changes a bikes info name`, done => {
     request
-      .put(`/notes/${sample2._id}`)
-      .send(`name: Brian`)
+      .put(`/bikes/${sample2._id}`)
+      .send(`make=Specialized&model=RumRunner`)
       .then(res => {
-        let user = res.body;
-        assert.deepEqual(user._id, sample2._id);
-        assert.deepEqual(user.__v, 0);
+        let bike = res.body;
+        assert.deepEqual(bike.make, `Specialized`);
+        assert.deepEqual(bike._id, sample2._id);
+        assert.equal(bike.__v, 0);
         done();
       })
       .catch(done);
@@ -72,7 +84,7 @@ describe(`users`, () => {
 
   it(`delets a user by id`, done => {
     request
-      .del(`/notes/${sample2._id}`)
+      .del(`/bikes/${sample2._id}`)
       .then(res => {
         let user = res.body;
         assert.equal(sample2._id, user._id);
@@ -80,6 +92,5 @@ describe(`users`, () => {
       })
       .catch(done);
   });
-
 
 });
