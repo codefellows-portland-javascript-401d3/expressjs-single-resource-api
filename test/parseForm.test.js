@@ -1,6 +1,6 @@
 const chai = require(`chai`);
 const assert = chai.assert;
-const parseForm = require(`../lib/parseForm`);
+const parseForm = require(`../lib/routes/parseForm`);
 const EventEmitter = require('events');
 class MyEmitter extends EventEmitter {}
 
