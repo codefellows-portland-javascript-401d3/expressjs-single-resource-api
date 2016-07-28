@@ -1,21 +1,34 @@
-# expressjs-single-resource-api
+# express-mongo-rest-api
 
-This is an http server that acts as a simple data store, backed by in-memory storage objects that can be found in `data.js`.
+This is an http server that stores data in MongoDB using Mongoose.
 
-### Directions to run
-1. run `npm install` from the command line
-1. `npm start` will start the server
-2. open your browser to `localhost:8000` or use an application like [Postman](https://www.getpostman.com/)
-3. enter a possible call from below
+### Directions to use
+1. `npm install` from the command line
+2.  [Download MongoDB](https://www.mongodb.com/download-center#community)
+3.  Start the database `mongod --dbpath [path to your MongoDB folder here]`
+4.  Start the server by running `npm start`  
+5. use an application like [Postman](https://www.getpostman.com/) to make calls to the API
 
-### Possible calls with current data
-- `GET`/api/notes returns all notes
-- `GET`/api/notes/:idNumber returns the note that has that id if it exists
-- `POST`/api/notes adds a valid JSON object to notes
-- `PUT`/api/notes/:idNumber updates the selected note if valid JSON
-- `DELETE`/api/notes/:idNumber deletes the selected notes
+### API Calls
 
-also works if you replace `notes` with `books` i.e. `GET`/books returns all books
+# Notes
+- `GET /api/notes` returns all notes
+- `GET /api/notes/:id` returns a note by id
+- `GET /api/notes/important` returns all notes marked important
+- `POST /api/notes` adds a note
+- `PUT /api/notes/:id` updates a note
+- `DELETE /api/notes/:id` deletes the selected notes
+
+# Users
+- `GET /api/users` returns all users
+- `GET /api/users/:id` returns a user by id
+- `POST /api/users` adds a note
+- `PUT /api/users/:id` updates a user
+- `DELETE /api/users/:id` deletes the selected user
+
+# Misc things to keep in mind
+- `GET` will only return items if they exist in the database
+- `POST` and `PUT` requests must be valid JSON.
 
 ### Ways to contribute
 - Report any bugs or feature requests by opening up a new GitHub issue
