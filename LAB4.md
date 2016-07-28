@@ -1,4 +1,4 @@
-![cf](http://i.imgur.com/7v5ASc8.png) express-mongo-rest-api
+![cf](http://i.imgur.com/7v5ASc8.png) add data relationships
 ====
 
 Add relationships to your app. You can either relate your existing
