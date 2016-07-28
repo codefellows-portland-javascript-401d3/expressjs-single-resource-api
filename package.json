@@ -21,6 +21,7 @@
   "homepage": "https://github.com/aaronbini/expressjs-single-resource-api#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "mongoose": "^4.5.7",
     "pug": "^2.0.0-beta4"
   },
   "devDependencies": {
