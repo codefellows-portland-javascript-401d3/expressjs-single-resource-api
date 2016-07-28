@@ -1,0 +1,16 @@
+body {
+  width: 500px;
+  margin: 0 auto;
+}
+input {
+  width: 90%;
+  margin: 0 auto 10px auto;
+  display: block;
+  padding: 4px;
+}
+button {
+  width: 200px;
+  padding: 8px 10px;
+  margin-left: calc(50% - 110px);
+  margin-top: 20px;
+}
