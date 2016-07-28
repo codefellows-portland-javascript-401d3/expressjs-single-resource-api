@@ -6,15 +6,13 @@ models, or add a third model. Streamline your mongoose GETs
 
 ##Description
 
-Add a third model, or relate your existing two models if such a relationship exists
+* Add a third model, or relate your existing two models if such a relationship exists
 
-Modify CRUD to work correctly to add and remove relationships
+* Modify CRUD to work correctly to add and remove relationships
 
-Currate your data selections using `.select`, `.populate` and `.lean`.
+* Currate your data selections using `.select`, `.populate` and `.lean`.
 
-New Models and relationships should be unit and API tested as appropriate.
-
-## Bonus
+* New Models and relationships should be unit and API tested as appropriate.
 
 ##Rubric
 * Use of Mongoose relationships: **4pts**
