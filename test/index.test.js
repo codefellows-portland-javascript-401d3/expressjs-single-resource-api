@@ -63,7 +63,19 @@ describe('this app\'s api', () => {
           testUser = result;
           done();
         });
-    });
+    });    
+
+// bad json throws errors before testing can happen    
+//     it('/POST method gives error with bad json in request', done => {
+//       request
+//         .post('/api/users')
+//         .send('{"invalid"}')
+//         .end((err, res) => {
+//           if (err) return done(err);
+//           assert.equal(res.statusCode, 500);
+//           done();
+//         });
+//     });
 
   });
 
