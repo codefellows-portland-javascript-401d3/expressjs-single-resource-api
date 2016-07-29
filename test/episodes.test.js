@@ -191,8 +191,14 @@ describe('episode endpoints', () => {
           .delete(`/api/episodes/${testEpisode2._id}`)
           .end( err => {
             if (err) done(err);
-            done(); 
+            request
+              .delete(`/api/episodes/${testEpisode1._id}`)
+              .end( err => {
+                if (err) done(err);
+                return done(); 
+              });
           });
+          
       });
   });
 

@@ -171,12 +171,17 @@ describe('series endpoints', () => {
     request
       .delete(`/api/series/${testSeries._id}`)
       .end( err => {
-        if (err) console.log('testSeries caused error attempting deletion');
+        if (err) done(err);
         request
-          .delete(`/api/series/${testSeries2._id}`)
+          .delete(`/api/series/${testSeries1._id}`)
           .end( err => {
-            if (err) console.log('testSeries2 caused error attempting deletion');
-            return done(); 
+            if (err) done(err);
+            request
+              .delete(`/api/series/${testSeries2._id}`)
+              .end( err => {
+                if (err) done(err);
+                return done(); 
+              });
           });
       });
   });
