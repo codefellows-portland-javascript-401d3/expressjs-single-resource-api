@@ -168,19 +168,18 @@ describe('episode endpoints', () => {
       });
   });
 
-  //   it('/GET on root route returns all', done => {
-  //     request
-  //       .get('/api/episodes')
-  //       .end((err, res) => {
-  //         if (err) return done(err);
-  //         assert.equal(res.statusCode, 200);
-  //         assert.include(res.header['content-type'], 'application/json');
-  //         let result = JSON.parse(res.text);
-  //         assert.isAbove(result.length, 1);
-  //         done();
-  //       });
-  //   });
-  // });
+  it('/GET on root route returns all', done => {
+    request
+      .get('/api/episodes')
+      .end((err, res) => {
+        if (err) return done(err);
+        assert.equal(res.statusCode, 200);
+        assert.include(res.header['content-type'], 'application/json');
+        let result = JSON.parse(res.text);
+        assert.isAbove(result.length, 1);
+        done();
+      });
+  });
 
   // cleanup
   after( done => {

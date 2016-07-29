@@ -11,7 +11,6 @@ describe('episode model', () => {
     let episode1 = new Episode(testEpisode);
     episode1.validate( err => {
       assert.notOk(err);
-      // assert.equal(error.errors['phone'].message, '555.0123 is not a valid phone number!');
       done();
     });
   });
@@ -20,7 +19,6 @@ describe('episode model', () => {
     let episode1 = new Episode(badEpisode);
     episode1.validate( err => {
       assert.ok(err);
-      //console.log('err',err);
       assert.equal(err.errors.title.properties.message, 'Path `{PATH}` is required.');
       done();
     });

@@ -11,7 +11,6 @@ describe('series model', () => {
     let series1 = new Series(testSeries);
     series1.validate( err => {
       assert.notOk(err);
-      // assert.equal(error.errors['phone'].message, '555.0123 is not a valid phone number!');
       done();
     });
   });
