@@ -5,8 +5,6 @@ const EventEmitter = require('events');
 
 describe('body parser', () => {
 
-
-
   it('parses valid json and calls next', () => {
     const emitter = new EventEmitter();
     const next = () => {
@@ -16,7 +14,6 @@ describe('body parser', () => {
     emitter.emit('data', obj);
     emitter.emit('end');
     assert.deepEqual('{"title":"Ghost Busters","year":1984}', JSON.stringify(emitter.body));
-
   });
 
   it('returns err message when no body is provided and calls next', () => {
@@ -29,7 +26,6 @@ describe('body parser', () => {
     emitter.emit('data', obj);
     emitter.emit('end');
     assert.ok(emitter.body === undefined);
-
   });
 
   it('returns err message when body is not valid JSON', () => {
