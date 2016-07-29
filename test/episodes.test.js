@@ -15,54 +15,28 @@ describe('episode endpoints', () => {
   let testEpisode2 = { title: 'test-episode4', length: 44 };
   let testBadEpisode = { title: '', length: 45 };
 
-  it('returns 404 for bad path', done => {
-    request
-      .get('/badpath')
-      .end((err, res) => {
-        assert.ok(err);
-        assert.equal(res.statusCode, 404);
-        done();
-      });
+  before( done => {
+    Promise.all([
+      request.post('/api/episodes').send(testEpisode),
+      request.post('/api/episodes').send(testEpisode1)
+    ])
+    .then( result => {
+      testEpisode = JSON.parse(result[0].text);
+      testEpisode1 = JSON.parse(result[1].text);
+      done();
+    })
+    .catch(done);
   });
 
-  it('returns endpoint list on api root route', done => {
+  it('/GET on root route returns all', done => {
     request
-      .get('/api')
-      .end((err, res) => {
-        if (err) return done(err);
-        assert.equal(res.statusCode, 200);
-        assert.include(res.header['content-type'], 'application/json');
-        assert.include(res.text, 'GET /api/episodes');
-        done();
-      });
-  });
-
-  it('/POST method completes successfully', done => {
-    request
-      .post('/api/episodes')
-      .send(testEpisode1)
+      .get('/api/episodes')
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
         let result = JSON.parse(res.text);
-        assert.equal(result.title, testEpisode1.title);
-        assert.equal(result.type, testEpisode1.type);
-        testEpisode1 = result;
-        done();
-      });
-  });
-
-  it('/POST validates title property', done => {
-    request
-      .post('/api/episodes')
-      .send(testBadEpisode)
-      .end((err, res) => {
-        if (!err) return done(res);
-        assert.equal(res.statusCode, 400);
-        assert.include(res.header['content-type'], 'application/json');
-        let result = JSON.parse(res.text);
-        assert.equal(result.type, testBadEpisode.type);
+        assert.isAbove(result.length, 1);
         done();
       });
   });
@@ -78,7 +52,37 @@ describe('episode endpoints', () => {
         assert.deepEqual(result, testEpisode1);
         done();
       });
-  });    
+  });
+
+  it('/POST method completes successfully', done => {
+    request
+      .post('/api/episodes')
+      .send(testEpisode2)
+      .end((err, res) => {
+        if (err) return done(err);
+        assert.equal(res.statusCode, 200);
+        assert.include(res.header['content-type'], 'application/json');
+        let result = JSON.parse(res.text);
+        assert.equal(result.title, testEpisode2.title);
+        assert.equal(result.length, testEpisode2.length);
+        testEpisode2 = result;
+        done();
+      });
+  });
+
+  it('/POST validates title property', done => {
+    request
+      .post('/api/episodes')
+      .send(testBadEpisode)
+      .end((err, res) => {
+        if (!err) return done(res);
+        assert.equal(res.statusCode, 400);
+        assert.include(res.header['content-type'], 'application/json');
+        let result = JSON.parse(res.text);
+        assert.notEqual(result.length, testBadEpisode.length);
+        done();
+      });
+  });
 
   it('/POST method gives error with bad json in request', done => {
     request
@@ -116,7 +120,6 @@ describe('episode endpoints', () => {
     request
       .get(`/api/episodes/${testEpisode._id}`)
       .end((err, res) => {
-
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
@@ -148,58 +151,37 @@ describe('episode endpoints', () => {
       });
   });
 
-  before( done => {
+  it('returns endpoint list on api root route', done => {
     request
-      .post('/api/episodes')
-      .send(testEpisode)
-      .end((err, res) => {
-        if (err) return done(err);
-        let result = JSON.parse(res.text);
-        testEpisode = result;
-        request
-          .post('/api/episodes')
-          .send(testEpisode2)
-          .end((err, res) => {
-            if (err) return done(err);
-            let result = JSON.parse(res.text);
-            testEpisode2 = result;
-            done();
-          });
-      });
-  });
-
-  it('/GET on root route returns all', done => {
-    request
-      .get('/api/episodes')
+      .get('/api')
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
-        let result = JSON.parse(res.text);
-        assert.isAbove(result.length, 1);
+        assert.include(res.text, 'GET /api/episodes');
+        done();
+      });
+  });
+
+  it('returns 404 for bad path', done => {
+    request
+      .get('/badpath')
+      .end((err, res) => {
+        assert.ok(err);
+        assert.equal(res.statusCode, 404);
         done();
       });
   });
 
   // cleanup
   after( done => {
-    request
-      .delete(`/api/episodes/${testEpisode._id}`)
-      .end( err => {
-        if (err) done(err);
-        request
-          .delete(`/api/episodes/${testEpisode2._id}`)
-          .end( err => {
-            if (err) done(err);
-            request
-              .delete(`/api/episodes/${testEpisode1._id}`)
-              .end( err => {
-                if (err) done(err);
-                return done(); 
-              });
-          });
-          
-      });
+    Promise.all([
+      request.delete(`/api/episodes/${testEpisode._id}`),
+      request.delete(`/api/episodes/${testEpisode1._id}`),
+      request.delete(`/api/episodes/${testEpisode2._id}`)
+    ])
+    .then( () => done() )
+    .catch(done);
   });
 
 });
