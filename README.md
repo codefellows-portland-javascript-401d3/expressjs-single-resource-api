@@ -1,14 +1,15 @@
 # Cf401 Lab08 Expressjs Single Resource Api
 
 Author: Geoffrey Emerson  
-Date: July 26, 2016  
+Date: July 28, 2016  
 
 ## About
 
-An HTTP server using Express.js that will act as a simple data store, backed by 'test-data-store'. Responds to GET, POST, PUT, and DELETE requests on `books` resource.
+An HTTP server using Express.js that will act as a simple data store, backed by Mongo DB. Responds to GET, POST, PUT, and DELETE requests on `series` and `episodes` resources. Query `/api` for a list of endpoints.
 
 ## Prerequisites:
 * [node.js](https://nodejs.org/en/)
+* [Mongo DB](https://mongodb.com/)
 * Dev: [Mocha](https://mochajs.org/)
 * Dev: [Eslint](http://eslint.org/)
 

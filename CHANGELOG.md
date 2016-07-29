@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project attempts to adhere to [Semantic Versioning](http://semver.org/).
 No guarantees should be inferred.
 
+## [2.0.0] - 2016-07-28
+### Changed
+- Switched to Mongo DB for data storage.
+
+### Added
+- Endpoints are now `series` and `episodes`.
+
 ## [1.0.1] - 2016-07-27
 ### Added
 - Moved body parsing logic to middleware.
