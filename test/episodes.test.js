@@ -13,6 +13,7 @@ describe('episode endpoints', () => {
   let testEpisode = { title: 'test-episode2', length: 42 };
   let testEpisode1 = { title: 'test-episode3', length: 43 };
   let testEpisode2 = { title: 'test-episode4', length: 44 };
+  let testBadEpisode = { title: '', length: 45 };
 
   it('returns 404 for bad path', done => {
     request
@@ -48,6 +49,20 @@ describe('episode endpoints', () => {
         assert.equal(result.title, testEpisode1.title);
         assert.equal(result.type, testEpisode1.type);
         testEpisode1 = result;
+        done();
+      });
+  });
+
+  it('/POST validates title property', done => {
+    request
+      .post('/api/episodes')
+      .send(testBadEpisode)
+      .end((err, res) => {
+        if (!err) return done(res);
+        assert.equal(res.statusCode, 400);
+        assert.include(res.header['content-type'], 'application/json');
+        let result = JSON.parse(res.text);
+        assert.equal(result.type, testBadEpisode.type);
         done();
       });
   });
