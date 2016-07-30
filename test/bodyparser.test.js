@@ -12,7 +12,7 @@ describe('bodyparser module', () => {
     const res = {};
 
     bodyparser(req,res, () => {
-      assert.deepEqual(req.body, bodyObj)
+      assert.deepEqual(req.body, bodyObj);
       done();
     });
 
