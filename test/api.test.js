@@ -42,8 +42,6 @@ describe('api e2e', ()=>{
     it('gets all notes', done=>{
       request.get('/api/notes')
         .then(res => {
-          //can't guess the id Mongo will assign
-          //making sure note1 contents are in the response body
           assert.include(res.body, note1);
           done();
         })
@@ -74,7 +72,11 @@ describe('api e2e', ()=>{
       request.put(`/api/notes/${note1._id}`)
         .send(update)
         .then(res =>{
-          assert.equal(res.body, 'Note updated');
+          //updating what's stored in note1
+          note1.title = 'New Note 1';
+          note1.body = 'stuff';
+          note1.important = false;
+          assert.include(res.body, note1);
           done();
         })
         .catch(done);
@@ -83,68 +85,155 @@ describe('api e2e', ()=>{
     it('deletes note 1', done=>{
       request.delete(`/api/notes/${note1._id}`)
         .then(res =>{
-          assert.equal(res.body, 'Note deleted');
+          assert.include(res.body, note1);
           done();
         })
         .catch(done);
     });
   });
 
-  describe('user api', ()=>{
+  describe('author api', ()=>{
 
-    const user1 = {
-      username: 'username_1',
-      email: 'testUser@aol.com'
+    const author1 = {
+      name: 'authorname_1',
+      email: 'testAuthor@aol.com'
     };
 
-    it('adds user 1', done=>{
-      request.post('/api/users')
-        .send(user1)
+    it('adds author 1', done=>{
+      request.post('/api/authors')
+        .send(author1)
         .then(res =>{
-          const user = res.body;
-          assert.ok(user._id);
-          user1.__v = 0;
-          user1._id = user._id;
+          const author = res.body;
+          assert.ok(author._id);
+          author1.__v = 0;
+          author1._id = author._id;
           done();
         })
         .catch(done);
     });
 
-    it('gets all user profiles', done=>{
-      request.get('/api/users')
+    it('gets all author profiles', done=>{
+      request.get('/api/authors')
         .then(res => {
-          assert.include(res.body, user1);
+          assert.include(res.body, author1);
           done();
         })
         .catch(done);
     });
 
-    it('gets user 1 by id', done=>{
-      request.get(`/api/users/${user1._id}`)
+    it('gets author 1 by id', done=>{
+      request.get(`/api/authors/${author1._id}`)
         .then(res =>{
-          const user = res.body;
-          assert.deepEqual(user, user1);
+          const author = res.body;
+          assert.deepEqual(author, author1);
           done();
         })
         .catch(done);
     });
 
-    const update = {username: 'newUser1', email: 'user1@gmail.com'};
+    const update = {name: 'newAuthor1', email: 'author1@gmail.com'};
 
-    it('updates user 1', done=>{
-      request.put(`/api/users/${user1._id}`)
+    it('updates author 1', done=>{
+      request.put(`/api/authors/${author1._id}`)
         .send(update)
         .then(res =>{
-          assert.equal(res.body, 'User profile updated');
+          author1.name = 'newAuthor1';
+          author1.email = 'author1@gmail.com';
+          assert.include(res.body, author1);
           done();
         })
         .catch(done);
     });
 
-    it('deletes user 1', done=>{
-      request.delete(`/api/users/${user1._id}`)
+    it('deletes author 1', done=>{
+      request.delete(`/api/authors/${author1._id}`)
         .then(res =>{
-          assert.equal(res.body, 'User deleted');
+          assert.include(res.body, author1);
+          done();
+        })
+        .catch(done);
+    });
+
+
+  });
+
+  describe('note/author relationship api', ()=>{
+    //db is cleared out at this point, so adding more test data
+    const note2 = {
+      title: 'note2',
+      body: 'note 2 body'
+    };
+
+    const author2 = {
+      name: 'Author 2',
+      email: 'email@testing.com'
+    };
+
+    it('adds note2', done=>{
+      request.post('/api/notes')
+        .send(note2)
+        .then(res =>{
+          const note = res.body;
+          assert.ok(note._id);
+          note2.__v = 0;
+          note2._id = note._id;
+          done();
+        })
+        .catch(done);
+    });
+
+    it('adds author2', done=>{
+      request.post('/api/authors')
+        .send(author2)
+        .then(res =>{
+          const author = res.body;
+          assert.ok(author._id);
+          author2.__v = 0;
+          author2._id = author._id;
+          done();
+        })
+        .catch(done);
+    });
+
+    it('author2 wrote note2', done=>{
+      request.put(`/api/authors/${author2._id}/notes/${note2._id}`)
+        .send()
+        .then(res =>{
+          note2.authorId = author2._id;
+          note2.important = false;
+          const note = res.body;
+          assert.deepEqual(note, note2);
+          done();
+        })
+        .catch(done);
+    });
+
+    it('gets count of how many notes author2 wrote', done=>{
+      request.get(`/api/authors/${author2._id}/countNotes`)
+      .then(res=>{
+        assert.equal(res.body, 1);
+        done();
+      })
+      .catch(done);
+    });
+
+    it('gets title and body of notes written by author2', done=>{
+      request.get(`/api/authors/${author2._id}/notes`)
+      .then(res=>{
+        const note = res.body[0];
+        assert.equal(note.title, note2.title);
+        assert.equal(note.body, note2.body);
+        done();
+      })
+      .catch(done);
+    });
+
+    it('removes author2 id from note2', done=>{
+      request.delete(`/api/authors/null/notes/${note2._id}`)
+        .then(res =>{
+          delete note2['authorId'];
+          const note = res.body;
+          assert.equal(note.authorId, note2.authorId);
           done();
         })
         .catch(done);
