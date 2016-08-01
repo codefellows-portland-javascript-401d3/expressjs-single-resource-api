@@ -2,7 +2,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const assert = chai.assert;
 const chaiHttp = require('chai-http');
-// const server = require('../server');
+
 chai.use(chaiHttp);
 
 const connection = require('../lib/setup-mongoose');
@@ -10,14 +10,6 @@ const connection = require('../lib/setup-mongoose');
 const app = require('../lib/app');
 
 describe('express routes and http verbs testing', () => {
-
-  // before( done => {
-  //   connection.on('open', () => {
-  //     console.log('opened connection');
-  //     connection.db.dropDatabase();
-  //     done();
-  //   });
-  // });
 
   const req = chai.request(app);
 
