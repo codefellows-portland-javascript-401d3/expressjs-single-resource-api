@@ -4,7 +4,8 @@
   "description": "A simple HTTP server utilizing Express",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -w"
+    "test": "mocha",
+    "watch": "mocha -w"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
     "chai-http": "^3.0.0",
     "express": "^4.14.0",
     "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "mongoose": "^4.5.7"
   }
 }
