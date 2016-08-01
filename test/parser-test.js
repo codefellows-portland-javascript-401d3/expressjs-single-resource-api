@@ -1,6 +1,6 @@
 const chai = require('chai');
 const assert = chai.assert;
-const parser = require('../lib/routes/body-parser')();
+const parser = require('../lib/body-parser')();
 const EventEmitter = require('events');
 
 describe('body parser', () => {

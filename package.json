@@ -4,7 +4,8 @@
   "description": "First attempt at express routing",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
+    "start": "node server.js",
+    "test": "env $(cat .env) mocha",
     "test:watch": "nodemon --exec 'mocha'",
     "watch": "mocha -w",
     "lint": "eslint **/*.js"
@@ -20,7 +21,9 @@
   },
   "homepage": "https://github.com/aaronbini/expressjs-single-resource-api#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "express": "^4.14.0",
+    "jsonwebtoken": "^7.1.7",
     "mongoose": "^4.5.7",
     "pug": "^2.0.0-beta4"
   },

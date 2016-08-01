@@ -1,7 +1,7 @@
 const Actor = require('../lib/models/actors-model');
 const assert = require('chai').assert;
 const mongoose = require('mongoose');
-const dateParser = require('../lib/routes/date-parser')();
+const dateParser = require('../lib/date-parser')();
 
 mongoose.Promise = global.Promise;
 
