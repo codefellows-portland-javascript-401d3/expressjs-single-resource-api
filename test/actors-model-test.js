@@ -5,18 +5,6 @@ const dateParser = require('../lib/routes/date-parser')();
 
 mongoose.Promise = global.Promise;
 
-//replica dateParser for testing
-// function dateParser (obj) {
-//   const today = new Date();
-//   const birthDate = new Date(obj.DOB);
-//   const age = today.getFullYear() - birthDate.getFullYear();
-//   const month = today.getMonth() - birthDate.getMonth();
-//   if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-//     age--;
-//   }
-//   obj.age = age;
-// };
-
 describe('actor', () => {
   it('requires a name', done => {
     const actor = {};
