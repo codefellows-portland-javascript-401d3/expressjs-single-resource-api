@@ -8,23 +8,23 @@ chai.use(chaiHttp);
 describe('HTTP server api', function() {
 
   const request = chai.request(app);
-
-  it('is able to create books', function(done) {
-    request
-    .post('/api/books')
-    .send({title: 'Crowds and Power', author: 'Elias Carnetti', pubYear: 1984})
-    .end((err) => {
-      if (err) return done(err);
-      request
-      .post('/api/books')
-      .send({title: 'The True Believer', author: 'Eric Hoffer', pubYear: 2010})
-      .end((err, res) => {
-        if (err) return done(err);
-        assert.deepEqual(JSON.parse(res.text), {id:2,data:{data:'barfoobaz'}});
-        done();
-      });
-    });
-  });
+  //
+  // it('is able to create books', function(done) {
+  //   request
+  //   .post('/api/books')
+  //   .send({title: 'Crowds and Power', author: 'Elias Carnetti', pubYear: 1984})
+  //   .end((err) => {
+  //     if (err) return done(err);
+  //     request
+  //     .post('/api/books')
+  //     .send({title: 'The True Believer', author: 'Eric Hoffer', pubYear: 2010})
+  //     .end((err, res) => {
+  //       if (err) return done(err);
+  //       assert.deepEqual(JSON.parse(res.text), {id:2,data:{data:'barfoobaz'}});
+  //       done();
+  //     });
+  //   });
+  // });
   //
   // it('is able to get all records', function(done) {
   //   request
