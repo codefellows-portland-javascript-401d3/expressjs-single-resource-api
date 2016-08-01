@@ -1,11 +1,10 @@
 const app = require('./lib/app');
 const http = require('http');
-const debug = require('debug')('myapp.server');
-require('./lib/setup-mongoose');
-
 const portNum = process.env.PORT || 3000;
+require('./lib/mongooseSetup');
+
 
 const server = http.createServer(app);
 server.listen(portNum, () => {
-  debug(`to open server, load 'localhost:${portNum}' in a browser window. server running at `, server.address());
+  console.log(`server is running at 'localhost:${portNum}'`);
 });
