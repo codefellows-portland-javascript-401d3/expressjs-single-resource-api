@@ -1,10 +1,10 @@
-const chai = require( 'chai' );
-const chaiHttp = require( 'chai-http' );
+const chai = require('chai');
+const chaiHttp = require('chai-http');
 const assert = chai.assert;
-chai.use( chaiHttp );
+chai.use(chaiHttp);
 const mongoose = require('mongoose');
-const connection = require( '../lib/mongoose-setup' );
-const app = require( '../lib/app' );
+const connection = require('../lib/mongoose-setup');
+const app = require('../lib/app');
 
 describe(`bikes`, () => {
 
@@ -17,7 +17,6 @@ describe(`bikes`, () => {
   });
 
   const request = chai.request(app);
-  const sample = `make=Pake&model=RumRunner`;
   let sample2 = {};
 
   it(`gets all`, done => {
@@ -31,10 +30,10 @@ describe(`bikes`, () => {
       .catch(done);
   });
 
-  it(`adds user to the db`, done => {
+  it(`adds bike to the db`, done => {
     request
       .post(`/bikes`)
-      .send(sample)
+      .send({make: `Pake`, model: `RumRunner`})
       .then(res => {
         const bike = res.body;
         sample2 = bike;
@@ -71,7 +70,7 @@ describe(`bikes`, () => {
   it(`changes a bikes info name`, done => {
     request
       .put(`/bikes/${sample2._id}`)
-      .send(`make=Specialized&model=RumRunner`)
+      .send({make: `Specialized`, model: `RumRunner`})
       .then(res => {
         let bike = res.body;
         assert.deepEqual(bike.make, `Specialized`);
