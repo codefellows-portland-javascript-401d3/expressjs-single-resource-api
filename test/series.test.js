@@ -177,7 +177,6 @@ describe('series endpoints', () => {
   // cleanup
   after( done => {
     Promise.all([
-      request.delete(`/api/series/${testSeries._id}`),
       request.delete(`/api/series/${testSeries1._id}`),
       request.delete(`/api/series/${testSeries2._id}`)
     ])
