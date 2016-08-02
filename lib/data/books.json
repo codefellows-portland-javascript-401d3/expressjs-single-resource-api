@@ -1,0 +1,299 @@
+[
+  {
+    "title" : "The Big Tiny: A Built-It-Myself Memoir",
+    "author" : "57a0daa149cdc9b01fa437ae",
+    "pubYear" : 2014,
+    "numPages" : 304,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea48ac220551219ef750"
+  },
+  {
+    "title" : "Wild : From Lost to Found on the Pacific Crest Trail",
+    "author" : "57a0dab949cdc9b01fa437af",
+    "pubYear" : 2012,
+    "numPages" : 338,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "Dark Places",
+    "author" : "57a0e6555342b8d7209592d2",
+    "pubYear" : 2009,
+    "numPages" : 370,
+    "rating" : "57a1066777045de3235b484c",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "The Martian",
+    "author" : "57a0e65c5342b8d7209592d3",
+    "pubYear" : 2011,
+    "numPages" : 369,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Outlander",
+    "author" : "57a0e6615342b8d7209592d4",
+    "pubYear" : 1991,
+    "numPages" : 896,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "The Impossible Lives of Greta Wells",
+    "author" : "57a0e66b5342b8d7209592d5",
+    "pubYear" : 2013,
+    "numPages" : 304,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "The Miniaturist",
+    "author" : "57a0e67b5342b8d7209592d6",
+    "pubYear" : 2014,
+    "numPages" : 400,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "The Girl in the Spider's Web",
+    "author" : "57a0e6825342b8d7209592d7",
+    "pubYear" : 2015,
+    "numPages" : 416,
+    "rating" : "57a1066777045de3235b484c",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "Cypherpunks : Freedom and the Future of the Internet",
+    "author" : "57a0e6885342b8d7209592d8",
+    "pubYear" : 2012,
+    "numPages" : 192,
+    "rating" : "57a1066777045de3235b484c",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "The 4-Hour Workweek",
+    "author" : "57a0e69b5342b8d7209592d9",
+    "pubYear" : 2007,
+    "numPages" : 308,
+    "rating" : "57a1066777045de3235b484c",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "The Girl at the End of the World",
+    "author" : "57a0e6a25342b8d7209592da",
+    "pubYear" : 2013,
+    "numPages" : 248,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "Sharp Objects",
+    "author" : "57a0e6555342b8d7209592d2",
+    "pubYear" : 2006,
+    "numPages" : 254,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Seveneves",
+    "author" : "57a0e6a85342b8d7209592db",
+    "pubYear" : 2015,
+    "numPages" : 881,
+    "rating" : "57a1066777045de3235b484c",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "American Gods",
+    "author" : "57a0e6af5342b8d7209592dc",
+    "pubYear" : 2005,
+    "numPages" : 635,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "The Good Girl",
+    "author" : "57a0e6b55342b8d7209592dd",
+    "pubYear" : 2014,
+    "numPages" : 352,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "How We Learn : The Surprising Truth About When, Where, and Why it Happens",
+    "author" : "57a0e6bb5342b8d7209592de",
+    "pubYear" : 2014,
+    "numPages" : 272,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Harry Potter and the Sorcerer's Stone",
+    "author" : "57a0e6c35342b8d7209592df",
+    "pubYear" : 1997,
+    "numPages" : 310,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "Harry Potter and the Chamber of Secrets",
+    "author" : "57a0e6c35342b8d7209592df",
+    "pubYear" : 1998,
+    "numPages" : 341,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "Harry Potter and the Prisoner of Azkaban",
+    "author" : "57a0e6c35342b8d7209592df",
+    "pubYear" : 1999,
+    "numPages" : 435,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "Is Everyone Hanging Out Without Me? (And Other Concerns)",
+    "author" : "57a0e6c85342b8d7209592e0",
+    "pubYear" : 2011,
+    "numPages" : 222,
+    "rating" : "57a1066777045de3235b484c",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Yes Please",
+    "author" : "57a0e6cf5342b8d7209592e1",
+    "pubYear" : 2014,
+    "numPages" : 329,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Why Not Me?",
+    "author" : "57a0e6c85342b8d7209592e0",
+    "pubYear" : 2015,
+    "numPages" : 228,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "No Place to Hide : Edward Snowden, the NSA, and the U.S. Surveillance State",
+    "author" : "57a0e6d45342b8d7209592e2",
+    "pubYear" : 2014,
+    "numPages" : 253,
+    "rating" : "57a1066777045de3235b484c",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Modern Romance",
+    "author" : "57a0e6da5342b8d7209592e3",
+    "pubYear" : 2015,
+    "numPages" : 277,
+    "rating" : "57a1066477045de3235b484b",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Harry Potter and the Goblet of Fire",
+    "author" : "57a0e6c35342b8d7209592df",
+    "pubYear" : 2000,
+    "numPages" : 734,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Harry Potter and the Order of the Phoenix",
+    "author" : "57a0e6c35342b8d7209592df",
+    "pubYear" : 2003,
+    "numPages" : 870,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Harry Potter and the Half-Blood Prince",
+    "author" : "57a0e6c35342b8d7209592df",
+    "pubYear" : 2005,
+    "numPages" : 652,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Harry Potter and the Deathly Hallows",
+    "author" : "57a0e6c35342b8d7209592df",
+    "pubYear" : 2007,
+    "numPages" : 759,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "The Casual Vacancy",
+    "author" : "57a0e6c35342b8d7209592df",
+    "pubYear" : 2012,
+    "numPages" : 503,
+    "rating" : "57a1066777045de3235b484c",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Stranger in a Strange Land",
+    "author" : "57a0e6df5342b8d7209592e4",
+    "pubYear" : 1991,
+    "numPages" : 528,
+    "rating" : "57a1065877045de3235b4848",
+    "complete" : false,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "Unnatural Creatures",
+    "author" : "57a0e6af5342b8d7209592dc",
+    "pubYear" : 2013,
+    "numPages" : 462,
+    "rating" : "57a1065877045de3235b4848",
+    "complete" : false,
+    "method" : "57a0ea52ac220551219ef751"
+  },
+  {
+    "title" : "Dragonfly in Amber",
+    "author" : "57a0e6615342b8d7209592d4",
+    "pubYear" : 2001,
+    "numPages" : 743,
+    "rating" : "57a1066a77045de3235b484d",
+    "complete" : true,
+    "method" : "57a0ea42ac220551219ef74f"
+  },
+  {
+    "title" : "Voyager",
+    "author" : "57a0e6615342b8d7209592d4",
+    "pubYear" : 2004,
+    "numPages" : 1072,
+    "rating" : "57a1065877045de3235b4848",
+    "complete" : false,
+    "method" : "57a0ea42ac220551219ef74f"
+  }
+]

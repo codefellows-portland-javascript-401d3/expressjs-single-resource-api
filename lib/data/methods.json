@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "57a0ea42ac220551219ef74f",
+    "readByMethod": "audiobook",
+    "__v": 0
+  },
+  {
+    "_id": "57a0ea48ac220551219ef750",
+    "readByMethod": "printBook",
+    "__v": 0
+  },
+  {
+    "_id": "57a0ea52ac220551219ef751",
+    "readByMethod": "ebook",
+    "__v": 0
+  }
+]
