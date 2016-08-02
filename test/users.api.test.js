@@ -23,7 +23,7 @@ describe(`users`, () => {
 
   it(`gets all`, done => {
     request
-      .get(`/notes`)
+      .get(`/users`)
       .then(res => {
         assert.deepEqual(res.body, []);
         done();
@@ -34,8 +34,8 @@ describe(`users`, () => {
 
   it(`adds user to the db`, done => {
     request
-      .post(`/notes`)
-      .send(`name: Arielle`)
+      .post(`/users`)
+      .send({name: `Arielle`})
       .then(res => {
         const user = res.body;
         assert.equal(res.status, 200);
@@ -48,7 +48,7 @@ describe(`users`, () => {
 
   it(`gets a user by id`, done => {
     request 
-      .get(`/notes/${sample2._id}`)
+      .get(`/users/${sample2._id}`)
       .then(res => {
         let user = res.body;
         assert.deepEqual(user._id, sample2._id);
@@ -59,7 +59,7 @@ describe(`users`, () => {
 
   it(`changes a user's name`, done => {
     request
-      .put(`/notes/${sample2._id}`)
+      .put(`/users/${sample2._id}`)
       .send(`name: Brian`)
       .then(res => {
         let user = res.body;
@@ -72,7 +72,7 @@ describe(`users`, () => {
 
   it(`delets a user by id`, done => {
     request
-      .del(`/notes/${sample2._id}`)
+      .del(`/users/${sample2._id}`)
       .then(res => {
         let user = res.body;
         assert.equal(sample2._id, user._id);
