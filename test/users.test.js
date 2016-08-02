@@ -1,5 +1,5 @@
 
-const Users = require( '../lib/models/users' );
+const Users = require( '../lib/models/user' );
 const assert = require( 'chai' ).assert;
 
 describe(`User Schema`, () => {
