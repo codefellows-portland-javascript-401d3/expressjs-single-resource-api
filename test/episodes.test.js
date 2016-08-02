@@ -25,7 +25,10 @@ describe('episode endpoints', () => {
       testEpisode1 = JSON.parse(result[1].text);
       done();
     })
-    .catch(done);
+    .catch( err => {
+      console.log('before episode err:',err);
+      done(err);
+    });
   });
 
   it('/GET on root route returns all', done => {
@@ -176,7 +179,6 @@ describe('episode endpoints', () => {
   // cleanup
   after( done => {
     Promise.all([
-      request.delete(`/api/episodes/${testEpisode._id}`),
       request.delete(`/api/episodes/${testEpisode1._id}`),
       request.delete(`/api/episodes/${testEpisode2._id}`)
     ])
