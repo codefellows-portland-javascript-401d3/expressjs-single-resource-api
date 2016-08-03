@@ -1,6 +1,14 @@
 # Change log
 All notable changes to this project will be documented in this file
 
+## 4.1.0 - 2016-08-02
+Added
+- admin role that can view all user profiles
+
+## 4.0.0 - 2016-08-02
+Added
+- user management and auth required to access author and note information
+
 ## 3.4.0 - 2016-07-31
 Added
 - Two new GET methods

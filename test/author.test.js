@@ -6,7 +6,6 @@ describe('author model', ()=>{
   it('errors on invalid email', done=>{
     const author = new Author({name: 'deeheber', email: 'address'});
     author.validate(err=>{
-      //console.log(err.errors.email);
       if(!err) done('invalid email entered and error not thrown');
       else done();
     });
