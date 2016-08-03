@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "eslint *.js",
     "dev": "env $(cat .env) nodemon server.js",
-    "test": "env $(cat .env) mocha",
+    "test": "mocha",
     "start": "env $(cat .env) node server.js",
     "watch": "mocha -w"
   },
