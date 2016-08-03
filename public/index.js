@@ -25,7 +25,8 @@ $('#episode-list').on('click', '.delete', function() {
   $.ajax(`/api/${selected.type}/${selected.id}`, {
     type: 'DELETE',
     success: data => {
-      console.log('deleted:',data);
+      window.location('/');
+      $('#notification-bar').text('Deleted:', data.name || data.title);
     },
     error: () => $('#notification-bar').text('Error occurred deleting', selected)
   });

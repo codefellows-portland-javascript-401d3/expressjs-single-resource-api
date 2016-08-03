@@ -49,7 +49,7 @@ describe('series endpoints', () => {
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
         let result = JSON.parse(res.text);
-        assert.deepEqual(result, testSeries);
+        assert.equal(result.name, testSeries.name);
         done();
       });
   });
@@ -120,7 +120,6 @@ describe('series endpoints', () => {
     request
       .get(`/api/series/${testSeries._id}`)
       .end((err, res) => {
-
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
@@ -147,7 +146,7 @@ describe('series endpoints', () => {
     request
       .get(`/api/series/${testSeries._id}`)
       .end((err, res) => {
-        assert.equal(res.header['content-length'], 0);
+        assert.equal(res.status, 400);
         done();
       });
   });
