@@ -12,7 +12,7 @@
   <h3>Series List</h3>
   <div id="series-template" style="display:none">
     <ul>
-      {{#each data}}<li>Series Name: <a href="/series-detail.html?id={{this._id}}">{{this.name}}</a></li>{{/each}}
+      {{#each data}}<li>Series Name: <a href="/series-detail.html?id={{this._id}}">{{this.name}}</a> <button class="delete" data-type="series" data-id="{{this._id}}">delete</button></li>{{/each}}
     </ul>
   </div>
   <div id="series-list"></div>
@@ -25,9 +25,15 @@
     </ul>
   </div>
   <div id="episode-list"></div>
-  <h3>Character List</h3>
-  <div id="character-list">
-    <ul><li>Not Implemented Yet</li></ul>
+  <h3>Users</h3>
+  <div id="userlist-template" style="display:none">
+    <ul>
+      {{#each data}}
+        <li>Username: <a href="/user-detail.html?id={{this._id}}">{{this.username}}</a> <button class="delete" data-type="users" data-id="{{this._id}}">delete</button></li>
+      {{/each}}
+    </ul>
+  </div>
+  <div id="user-list">
   </div>
 </body>
   <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>

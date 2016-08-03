@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "eslint **/*.js",
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test mocha -R nyan",
     "watch": "mocha -w",
     "start": "NODE_ENV=production node index.js"
   },
@@ -28,6 +28,7 @@
   "dependencies": {
     "bcryptjs": "^2.3.0",
     "express": "^4.14.0",
+    "jsonwebtoken": "^7.1.7",
     "mongoose": "^4.5.7"
   }
 }
