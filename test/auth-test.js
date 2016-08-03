@@ -80,6 +80,7 @@ describe('authentication testing', () => {
     let token1 = '';
     let token2 = '';
 
+    //this is breaking travis test
     it('adds user when proper info is sent', done => {
       req
         .post('/auth/signup')
