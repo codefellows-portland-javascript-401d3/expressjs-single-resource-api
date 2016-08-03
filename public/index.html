@@ -32,13 +32,15 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
     <section class="tab-content" id="movies">
-      <button id="allMovies">Show All Movies</button>
       <form method="GET">
-        <label for="title">Title:</label>
-        <select id="movieSelect">Select Movies</select>
-        <input name="username">
-    		<button id="signUpButton" type="submit">Sign Up!</button>
+        <h4>Movie Select</h4>
+        <select id="movieSelect">
+          <option>Select Movie</option>
+        </select>
+    		<button id="oneMovie" type="submit">Get Movie Details</button>
     	</form>
+      <button id="allMovies" type="submit">Get All Movie Details</button>
+      <div id="movieView"></div>
     </section>
 
     <!-- Actors Tab Content
