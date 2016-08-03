@@ -13,26 +13,35 @@ describe('Movies API', () => {
 
   const req = chai.request(app);
 
+  const user = {username: 'a', password: 'abc123'};
+
+  let token = '';
+
+  it('adds user', (done) => {
+    req.post('/auth/signup')
+      .send(user)
+      .then(res => {
+        token = res.body.token;
+        console.log('here');
+      })
+      .then(done, done);
+  });
+
   const testMovie = {title: 'A Few Good Men', year: '1990-06-06', category: 'Drama', gross: 4000000};
   const testMovie2 = {title: 'Test Movie', 'year': '1986-05-05', category: 'Adventure', gross: 3000000};
 
   const testActor = {name: 'Bill Murray', DOB: '1950-05-05', movies: []};
   const testActor2 = {name: 'Meryl Streep', DOB: '1955-05-05', movies: []};
 
-  let token = '';
 
-  before(done => {
-    req.post('/auth/signup')
-      .send({username: 'a', password: 'abc123'})
-      .then(res => assert.ok(token = res.body.token))
-      .then(done, done).catch(done);
-  });
+
+
 
   it('serves up homepage', (done) => {
     req.get('/')
       .then((res) => {
         expect(res).to.have.status(200);
-        expect(res.text).to.have.string('Simple Movie Storage');
+        expect(res.text).to.have.string('Username:');
         done();
       })
       .catch(done);
