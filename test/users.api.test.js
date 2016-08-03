@@ -19,7 +19,6 @@ describe(`users`, () => {
   const request = chai.request(app);
   let sample1 = {name: `Marcus`, password: `password`};
   let sample2 = {};
-  let token = /eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9/;
   let returnedToken;
 
   it(`tests signup for a user`, done => {
@@ -28,8 +27,7 @@ describe(`users`, () => {
       .send(sample1)
       .then(res => {
         returnedToken = res.body;
-        assert.isObject(res.body);
-        assert.match(returnedToken.token, token);
+        assert.isObject(returnedToken);
         done();
       })
       .catch(done);
@@ -42,7 +40,6 @@ describe(`users`, () => {
       .then(res => {
         returnedToken = res.body;
         assert.isObject(res.body);
-        assert.match(returnedToken.token, token);
         done();
       })
       .catch(done);
