@@ -22,6 +22,7 @@ describe('Movies API', () => {
       .send(user)
       .then(res => {
         token = res.body.token;
+        assert.ok(res.body.token);
         console.log('here');
       })
       .then(done, done);

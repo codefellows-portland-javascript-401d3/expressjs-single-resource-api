@@ -179,8 +179,7 @@ describe('authentication testing', () => {
   after((done) => {
     console.log('dropping db');
     connection.db.dropDatabase();
-    console.log('connection closed');
-    connection.close(done);
+    done();
   });
 
 });
