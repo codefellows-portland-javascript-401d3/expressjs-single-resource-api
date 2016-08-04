@@ -1,6 +1,7 @@
 const seriesToHtml = Handlebars.compile($('#series-details-template').html());
 const episodesToHtml = Handlebars.compile($('#episode-list-template').html());
 const id = url('?id');
+const token = Cookies.get('token');
 
 if(id) {
   $.ajax(`/api/series/${id}`, {
@@ -15,14 +16,15 @@ if(id) {
   $('#notification-bar').text('Bad id parameter');
 }
 
-// $('body').on('click', '.delete', function() {
-//   const selected = $(this).data();
-//   $.ajax(`/api/${selected.type}/${selected.id}`, {
-//     type: 'DELETE',
-//     success: data => {
-//       window.location('/');
-//       $('#notification-bar').text('Deleted:', data.name || data.title);
-//     },
-//     error: () => $('#notification-bar').text('Error occurred deleting', selected)
-//   });
-// });
+$('body').on('click', '.delete', function() {
+  const selected = $(this).data();
+  $.ajax(`/api/series/${selected.id}`, {
+    type: 'DELETE',
+    headers: {'token': token},
+    success: data => {
+      window.location.href = '/';
+      $('#notification-bar').text('Deleted:', data.name);
+    },
+    error: () => $('#notification-bar').text('Error occurred deleting', selected)
+  });
+});

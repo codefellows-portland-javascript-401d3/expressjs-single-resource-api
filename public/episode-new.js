@@ -1,3 +1,5 @@
+const token = Cookies.get('token');
+
 $.getJSON('/api/series', function(result) {
   var options = $('#series_id');
   $.each(result, function() {
@@ -17,7 +19,12 @@ $('#episode-form button').on('click', event => {
 
   if(!data.title) $('#notification-bar').text('Title Required');
   else {
-    $.post('/api/episodes', JSON.stringify(data))
+    $.ajax({
+      url: '/api/episodes',
+      type: 'POST',
+      headers: { 'token': token },
+      data: JSON.stringify(data)
+    })  
     .done( function(result) {
       window.location.href = 'episode-detail.html?id=' + result._id;
     });

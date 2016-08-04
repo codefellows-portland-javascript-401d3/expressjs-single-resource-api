@@ -1,3 +1,5 @@
+const token = Cookies.get('token');
+
 $('#series-form button').on('click', event => {
   event.preventDefault();
   
@@ -9,7 +11,15 @@ $('#series-form button').on('click', event => {
 
   if(!data.name) $('#notification-bar').text('Name Required');
   else {
-    $.post('/api/series', JSON.stringify(data))
+    $.ajax({
+      url: '/api/series',
+      type: 'POST',
+      headers: { 'token': token },
+      // contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify(data)
+      // dataType: 'json'
+    })  
+    // $.post('/api/series', JSON.stringify(data))
     .done( function(result) {
       window.location.href = 'series-detail.html?id=' + result._id;
     });

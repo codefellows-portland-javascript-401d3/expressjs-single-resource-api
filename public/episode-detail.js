@@ -1,5 +1,6 @@
 const episodeToHtml = Handlebars.compile($('#epsode-details-template').html());
 const id = url('?id');
+const token = Cookies.get('token');
 
 if(id) {
   $.ajax(`/api/episodes/${id}`, {
@@ -20,6 +21,7 @@ $('body').on('click', '.delete', function() {
   const selected = $(this).data();
   $.ajax(`/api/episodes/${selected.id}`, {
     type: 'DELETE',
+    headers: {'token': token},
     success: data => {
       window.location.href = '/';
       $('#notification-bar').text('Deleted:' + data.title);
