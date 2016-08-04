@@ -17,13 +17,42 @@ describe(`bikes`, () => {
   });
 
   const request = chai.request(app);
+  let sample1 = {name: `Marcus`, password: `password`};
   let sample2 = {};
+  let returnedToken;
+
+
+
+  it(`tests signup for a user`, done => {
+    request
+      .post(`/auth/signup`)
+      .send(sample1)
+      .then(res => {
+        returnedToken = res.body;
+        assert.isObject(returnedToken);
+        done();
+      })
+      .catch(done);
+  });
+
+  it(`tests signing in for a user`, done => {
+    request
+      .post(`/auth/signin`)
+      .send({name: `Marcus`, password: `password`})
+      .then(res => {
+        returnedToken = res.body;
+        assert.isObject(returnedToken);
+        done();
+      })
+      .catch(done);
+  });
 
   it(`gets all`, done => {
     request
       .get(`/bikes`)
+      .set(`token`, returnedToken.token)
       .then(res => {
-        assert.deepEqual(res.body, []);
+        assert.deepEqual(res.body.length, 0);
         assert.equal(res.status, 200);
         done();
       })
@@ -33,6 +62,7 @@ describe(`bikes`, () => {
   it(`adds bike to the db`, done => {
     request
       .post(`/bikes`)
+      .set(`token`, returnedToken.token)
       .send({make: `Pake`, model: `RumRunner`})
       .then(res => {
         const bike = res.body;
@@ -48,6 +78,7 @@ describe(`bikes`, () => {
   it(`it gets the number of bikes in the db`, done => {
     request
       .get(`/bikes/number`)
+      .set(`token`, returnedToken.token)
       .then(res => {
         assert.deepEqual(res.body, {msg: `1 total bikes saved`});
         done();
@@ -58,6 +89,7 @@ describe(`bikes`, () => {
   it(`gets a user by id`, done => {
     request 
       .get(`/bikes/${sample2._id}`)
+      .set(`token`, returnedToken.token)
       .then(res => {
         let bike = res.body;
         assert.deepEqual(bike._id, sample2._id);
@@ -70,6 +102,7 @@ describe(`bikes`, () => {
   it(`changes a bikes info name`, done => {
     request
       .put(`/bikes/${sample2._id}`)
+      .set(`token`, returnedToken.token)
       .send({make: `Specialized`, model: `RumRunner`})
       .then(res => {
         let bike = res.body;
@@ -84,6 +117,7 @@ describe(`bikes`, () => {
   it(`delets a user by id`, done => {
     request
       .del(`/bikes/${sample2._id}`)
+      .set(`token`, returnedToken.token)
       .then(res => {
         let user = res.body;
         assert.equal(sample2._id, user._id);
