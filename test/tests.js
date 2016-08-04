@@ -68,10 +68,10 @@ describe('API', () => {
         badRequest('/users/signup', {name: 'nonsense'}, 'Username and password must both be supplied.', done);
       });
 
-      //Passes, but produces weird behavior.
-      // it('can\'t reuse username', (done) => {
-      //   badRequest('/users/signup', alexander, 'Username Alexander Hemptlerest in use.', done);
-      // });
+      // Passes, but produces weird behavior.
+      it.skip('can\'t reuse username', (done) => {
+        badRequest('/users/signup', alexander, 'Username Alexander Hemptlerest in use.', done);
+      });
     });
 
     describe('User Authentication >', () => {
@@ -128,9 +128,9 @@ describe('API', () => {
       });
 
       //Does something weird.
-      // it('signin name/pass can\'t be invalid', done => {
-      //   badRequest('/users/signin', {name: 'Feeb', password: 'abc'}, 'Username or password incorrect.', done);
-      // });
+      it('signin name/pass can\'t be invalid', done => {
+        badRequest('/users/signin', {name: 'Feeb', password: 'abc'}, 'Username or password incorrect.', done);
+      });
     });
   });
 
