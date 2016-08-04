@@ -67,7 +67,7 @@ describe('user endpoints', () => {
         assert.include(res.header['content-type'], 'application/json');
         let result = JSON.parse(res.text);
         assert.equal(result.username, testUser2.username);
-        assert.equal(result.password, testUser2.password);
+        assert.notEqual(result.password, testUser2.password); // store hashes, not plaintext passwords
         testUser2 = result;
         done();
       });

@@ -6,6 +6,8 @@ require( '../lib/mongoose-setup' );
 
 chai.use(chaiHttp);
 
+const testToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3YTI4MjMyNGM2OTEyNDlhNzgxNmNkNCIsImlhdCI6MTQ3MDMyMTQxOH0.CyS3HE_hPBaPVAAfU2OGPKZQwgNyeRWDMB0FeL7fkKY';
+
 describe('episode endpoints', () => {
 
   const request = chai.request(app);
@@ -17,8 +19,8 @@ describe('episode endpoints', () => {
 
   before( done => {
     Promise.all([
-      request.post('/api/episodes').send(testEpisode),
-      request.post('/api/episodes').send(testEpisode1)
+      request.post('/api/episodes').set('token',testToken).send(testEpisode),
+      request.post('/api/episodes').set('token',testToken).send(testEpisode1)
     ])
     .then( result => {
       testEpisode = JSON.parse(result[0].text);
@@ -26,7 +28,7 @@ describe('episode endpoints', () => {
       done();
     })
     .catch( err => {
-      console.log('before episode err:',err);
+      console.log('before episode err:',err.response.text);
       done(err);
     });
   });
@@ -60,6 +62,7 @@ describe('episode endpoints', () => {
   it('/POST method completes successfully', done => {
     request
       .post('/api/episodes')
+      .set('token',testToken)
       .send(testEpisode2)
       .end((err, res) => {
         if (err) return done(err);
@@ -76,6 +79,7 @@ describe('episode endpoints', () => {
   it('/POST validates title property', done => {
     request
       .post('/api/episodes')
+      .set('token',testToken)
       .send(testBadEpisode)
       .end((err, res) => {
         if (!err) return done(res);
@@ -90,6 +94,7 @@ describe('episode endpoints', () => {
   it('/POST method gives error with bad json in request', done => {
     request
       .post('/api/episodes')
+      .set('token',testToken)
       .send('{"invalid"}')
       .end( (err,res) => {
         if(err) {
@@ -108,6 +113,7 @@ describe('episode endpoints', () => {
     const putUrl = `/api/episodes/${testEpisode._id}`;
     request
       .put(putUrl)
+      .set('token',testToken)
       .send(testEpisode)
       .end((err, res) => {
         if (err) return done(err);
@@ -135,6 +141,7 @@ describe('episode endpoints', () => {
   it('/DELETE method removes episode', done => {
     request
       .delete(`/api/episodes/${testEpisode._id}`)
+      .set('token',testToken)
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
@@ -179,8 +186,8 @@ describe('episode endpoints', () => {
   // cleanup
   after( done => {
     Promise.all([
-      request.delete(`/api/episodes/${testEpisode1._id}`),
-      request.delete(`/api/episodes/${testEpisode2._id}`)
+      request.delete(`/api/episodes/${testEpisode1._id}`).set('token',testToken),
+      request.delete(`/api/episodes/${testEpisode2._id}`).set('token',testToken)
     ])
     .then( () => done() )
     .catch(done);
