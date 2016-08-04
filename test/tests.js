@@ -69,7 +69,7 @@ describe('API', () => {
       });
 
       // Passes, but produces weird behavior.
-      it.skip('can\'t reuse username', (done) => {
+      it('can\'t reuse username', (done) => {
         badRequest('/users/signup', alexander, 'Username Alexander Hemptlerest in use.', done);
       });
     });
