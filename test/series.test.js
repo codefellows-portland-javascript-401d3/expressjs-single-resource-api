@@ -6,6 +6,8 @@ require( '../lib/mongoose-setup' );
 
 chai.use(chaiHttp);
 
+const testToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3YTI4MjMyNGM2OTEyNDlhNzgxNmNkNCIsImlhdCI6MTQ3MDMyMTQxOH0.CyS3HE_hPBaPVAAfU2OGPKZQwgNyeRWDMB0FeL7fkKY';
+
 describe('series endpoints', () => {
 
   const request = chai.request(app);
@@ -17,8 +19,8 @@ describe('series endpoints', () => {
 
   before( done => {
     Promise.all([
-      request.post('/api/series').send(testSeries),
-      request.post('/api/series').send(testSeries1)
+      request.post('/api/series').set('token',testToken).send(testSeries),
+      request.post('/api/series').set('token',testToken).send(testSeries1)
     ])
     .then( result => {
       testSeries = JSON.parse(result[0].text);
@@ -57,6 +59,7 @@ describe('series endpoints', () => {
   it('/POST method completes successfully', done => {
     request
       .post('/api/series')
+      .set('token',testToken)
       .send(testSeries2)
       .end((err, res) => {
         if (err) return done(err);
@@ -73,6 +76,7 @@ describe('series endpoints', () => {
   it('/POST validates title property', done => {
     request
       .post('/api/series')
+      .set('token',testToken)
       .send(testBadSeries)
       .end((err, res) => {
         if (!err) return done(res);
@@ -87,6 +91,7 @@ describe('series endpoints', () => {
   it('/POST method gives error with bad json in request', done => {
     request
       .post('/api/series')
+      .set('token',testToken)
       .send('{"invalid"}')
       .end( (err,res) => {
         if(err) {
@@ -105,6 +110,7 @@ describe('series endpoints', () => {
     const putUrl = `/api/series/${testSeries._id}`;
     request
       .put(putUrl)
+      .set('token',testToken)
       .send(testSeries)
       .end((err, res) => {
         if (err) return done(err);
@@ -132,6 +138,7 @@ describe('series endpoints', () => {
   it('/DELETE method removes series', done => {
     request
       .delete(`/api/series/${testSeries._id}`)
+      .set('token',testToken)
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
@@ -176,8 +183,8 @@ describe('series endpoints', () => {
   // cleanup
   after( done => {
     Promise.all([
-      request.delete(`/api/series/${testSeries1._id}`),
-      request.delete(`/api/series/${testSeries2._id}`)
+      request.delete(`/api/series/${testSeries1._id}`).set('token',testToken),
+      request.delete(`/api/series/${testSeries2._id}`).set('token',testToken)
     ])
     .then( () => done() )
     .catch(done);
