@@ -1,9 +1,11 @@
 {
   "name": "expressjs-single-resource-api",
   "version": "1.0.0",
-  "description": "First attempt at express routing",
+  "description": "user authentication and management",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "start:dev": "env $(cat .env) nodemon server.js",
     "test": "mocha",
     "test:watch": "nodemon --exec 'mocha'",
     "watch": "mocha -w",
@@ -20,7 +22,10 @@
   },
   "homepage": "https://github.com/aaronbini/expressjs-single-resource-api#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "jsonwebtoken": "^7.1.7",
     "mongoose": "^4.5.7",
     "pug": "^2.0.0-beta4"
   },

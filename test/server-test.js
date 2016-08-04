@@ -9,18 +9,23 @@ const connection = require('../lib/setup-mongoose');
 
 const app = require('../lib/app');
 
-describe('express routes and http verbs testing', () => {
+describe('Movies API', () => {
 
   const req = chai.request(app);
 
-  it('serves up homepage', (done) => {
-    req.get('/')
-      .then((res) => {
-        expect(res).to.have.status(200);
-        expect(res.text).to.have.string('Simple Movie Storage');
-        done();
+  const user = {username: 'a', password: 'abc123'};
+
+  let token = '';
+
+  it('adds user', (done) => {
+    req.post('/auth/signup')
+      .send(user)
+      .then(res => {
+        token = res.body.token;
+        assert.ok(res.body.token);
+        console.log('here');
       })
-      .catch(done);
+      .then(done, done);
   });
 
   const testMovie = {title: 'A Few Good Men', year: '1990-06-06', category: 'Drama', gross: 4000000};
@@ -29,14 +34,30 @@ describe('express routes and http verbs testing', () => {
   const testActor = {name: 'Bill Murray', DOB: '1950-05-05', movies: []};
   const testActor2 = {name: 'Meryl Streep', DOB: '1955-05-05', movies: []};
 
+
+
+
+
+  it('serves up homepage', (done) => {
+    req.get('/')
+      .then((res) => {
+        expect(res).to.have.status(200);
+        expect(res.text).to.have.string('Username:');
+        done();
+      })
+      .catch(done);
+  });
+
   it('POSTS a movie', (done) => {
     req.post('/movies')
+      .set({token})
       .send(testMovie)
       .then((res) => {
         assert.ok(res.body._id);
         testMovie._id = res.body._id;
         testMovie.actors = [];
         testMovie.awards = [];
+        testMovie.votes = [];
         testMovie.year = res.body.year;
         done();
       })
@@ -45,6 +66,7 @@ describe('express routes and http verbs testing', () => {
 
   it('aggregates gross of movies in storage', (done) => {
     req.get('/movies/gross')
+      .set({token})
       .then(res => {
         assert.deepEqual(res.body, {grossTotal: 4000000});
         done();
@@ -54,6 +76,7 @@ describe('express routes and http verbs testing', () => {
 
   it('GETS one movie', (done) => {
     req.get(`/movies/${testMovie._id}`)
+      .set({token})
       .then((res) => {
         assert.deepEqual(res.body, testMovie);
         done();
@@ -63,6 +86,7 @@ describe('express routes and http verbs testing', () => {
 
   it('GETS all after a post', (done) => {
     req.get('/movies')
+      .set({token})
       .then((res) => {
         assert.deepEqual(res.body, [testMovie]);
         done();
@@ -72,11 +96,13 @@ describe('express routes and http verbs testing', () => {
 
   it('replaces one movie with PUT', (done) => {
     req.put(`/movies/${testMovie._id}`)
+      .set({token})
       .send(testMovie2)
       .then((res) => {
         testMovie2._id = res.body._id;
         testMovie2.actors = [];
         testMovie2.awards = [];
+        testMovie2.votes = [];
         testMovie2.year = res.body.year;
         assert.deepEqual(res.body, testMovie2);
         done();
@@ -85,6 +111,7 @@ describe('express routes and http verbs testing', () => {
 
   it('POSTS an actor', (done) => {
     req.post('/actors')
+      .set({token})
       .send(testActor)
       .then((res) => {
         assert.ok(res.body._id);
@@ -99,6 +126,7 @@ describe('express routes and http verbs testing', () => {
 
   it('adds a movie reference to an actor', (done) => {
     req.put(`/actors/${testActor._id}/movies/${testMovie._id}`)
+      .set({token})
       .then((res) => {
         assert.ok(res.body.movies.length > 0);
         done();
@@ -108,6 +136,7 @@ describe('express routes and http verbs testing', () => {
 
   it('also adds actor reference to a movie', (done) => {
     req.get(`/movies/${testMovie._id}`)
+      .set({token})
       .then((res) => {
         assert.ok(res.body.actors.length > 0);
         done();
@@ -117,6 +146,7 @@ describe('express routes and http verbs testing', () => {
 
   it('DELETES a movie', (done) => {
     req.delete(`/movies/${testMovie2._id}`)
+      .set({token})
       .then((res) => {
         assert.deepEqual(res.body, { ok: 1, n: 1 });
         done();
@@ -126,6 +156,7 @@ describe('express routes and http verbs testing', () => {
 
   it('removes reference to the movie in actors movie array after movie is deleted', (done) => {
     req.get(`/actors/${testActor._id}`)
+      .set({token})
       .then((res) => {
         assert.ok(res.body.movies.length == 0);
         done();
@@ -135,6 +166,7 @@ describe('express routes and http verbs testing', () => {
 
   it('404s on bad route', (done) => {
     req.get('/movies/failing/wrong')
+      .set({token})
       .end((err, res) => {
         expect(res).to.have.status(404);
         done();
@@ -143,6 +175,7 @@ describe('express routes and http verbs testing', () => {
 
   it('404s on unsupported HTTP verb', (done) => {
     req.patch('/movies')
+    .set({token})
     .end((err, res) => {
       expect(res).to.have.status(404);
       done();
@@ -153,6 +186,7 @@ describe('express routes and http verbs testing', () => {
 
   it('aggregates number of movies all actors have appeared in', (done) => {
     req.get('/actors/totalMovies')
+      .set({token})
       .then(res => {
         assert.deepEqual(res.body, {totalMovies: 0});
         done();
@@ -162,6 +196,7 @@ describe('express routes and http verbs testing', () => {
 
   it('GETS one actor', (done) => {
     req.get(`/actors/${testActor._id}`)
+      .set({token})
       .then((res) => {
         assert.ok(res.body);
         done();
@@ -171,6 +206,7 @@ describe('express routes and http verbs testing', () => {
 
   it('GETS all after a post', (done) => {
     req.get('/actors')
+      .set({token})
       .then((res) => {
         assert.ok(res.body);
         done();
@@ -180,6 +216,7 @@ describe('express routes and http verbs testing', () => {
 
   it('replaces one actor with PUT', (done) => {
     req.put(`/actors/${testActor._id}`)
+      .set({token})
       .send(testActor2)
       .then((res) => {
         testActor2._id = res.body._id;
@@ -194,6 +231,7 @@ describe('express routes and http verbs testing', () => {
 
   it('DELETES an actor', (done) => {
     req.delete(`/actors/${testActor2._id}`)
+      .set({token})
       .then((res) => {
         assert.deepEqual(res.body, { ok: 1, n: 1 });
         done();
