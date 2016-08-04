@@ -9,14 +9,14 @@
   </header>
   <h1>No Spoilers</h1>
   <h2>Database Overview</h2>
-  <h3>Series List</h3>
+  <h3>Series List <a href="series-new.html">(new)</a></h3>
   <div id="series-template" style="display:none">
     <ul>
       {{#each data}}<li>Series Name: <a href="/series-detail.html?id={{this._id}}">{{this.name}}</a> <button class="delete" data-type="series" data-id="{{this._id}}">delete</button></li>{{/each}}
     </ul>
   </div>
   <div id="series-list"></div>
-  <h3>Episode List <a href="/episode-form.html">(new)</a></h3>
+  <h3>Episode List <a href="episode-new.html">(new)</a></h3>
   <div id="episode-template" style="display:none">
     <ul>
       {{#each data}}
