@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project attempts to adhere to [Semantic Versioning](http://semver.org/).
 No guarantees should be inferred.
 
+## [3.1.0] - 2016-08-04
+### Added
+- Sign Up page
+
 ## [3.0.0] - 2016-08-04
 ### Added
 - Front end pages for demo.

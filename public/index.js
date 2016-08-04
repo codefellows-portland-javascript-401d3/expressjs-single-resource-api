@@ -66,7 +66,7 @@ function userOptions() {
   if(token) {
     $('#user-options').html(`<p>Current User: ${loginUser} <button id="logout">Log Out</button></p>`);
   } else {
-    $('#user-options').html('<a href="login.html"><button>Log In</button></a>');
+    $('#user-options').html('<a href="login.html"><button>Log In</button></a> <a href="signup.html"><button>Sign Up</button></a>');
   }
   
 }
