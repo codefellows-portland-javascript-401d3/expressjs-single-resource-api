@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const chaiHTTP = require('chai-http');
 const assert = chai.assert;
 chai.use(chaiHTTP);
-require('dotenv').config();
+if (!process.env.TRAVIS) require('dotenv').config();
 
 //Starts up the db connection
 const connection = require('../lib/mongoose-setup');
