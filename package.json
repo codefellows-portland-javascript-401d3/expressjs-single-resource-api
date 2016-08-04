@@ -1,11 +1,11 @@
 {
   "name": "cf401-lab08-expressjs-single-resource-api",
-  "version": "2.0.0",
+  "version": "3.1.0",
   "description": "Code Fellows 401 Project",
   "main": "index.js",
   "scripts": {
     "pretest": "eslint **/*.js",
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test mocha -R nyan",
     "watch": "mocha -w",
     "start": "NODE_ENV=production node index.js"
   },
@@ -26,7 +26,9 @@
     "mocha": "^2.5.3"
   },
   "dependencies": {
+    "bcryptjs": "^2.3.0",
     "express": "^4.14.0",
+    "jsonwebtoken": "^7.1.7",
     "mongoose": "^4.5.7"
   }
 }

@@ -6,36 +6,34 @@ require( '../lib/mongoose-setup' );
 
 chai.use(chaiHttp);
 
-const testToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3YTI4MjMyNGM2OTEyNDlhNzgxNmNkNCIsImlhdCI6MTQ3MDMyMTQxOH0.CyS3HE_hPBaPVAAfU2OGPKZQwgNyeRWDMB0FeL7fkKY';
-
-describe('episode endpoints', () => {
+describe('user endpoints', () => {
 
   const request = chai.request(app);
 
-  let testEpisode = { title: 'test-episode2', length: 42 };
-  let testEpisode1 = { title: 'test-episode3', length: 43 };
-  let testEpisode2 = { title: 'test-episode4', length: 44 };
-  let testBadEpisode = { title: '', length: 45 };
+  let testUser = { username: 'Apollo', password: 'Boxy' };
+  let testUser1 = { username: 'Athena', password: 'Starbuck' };
+  let testUser2 = { username: 'Starbuck', password: 'socialator' };
+  let testBadUser = { username: '', password: 'frak' };
 
   before( done => {
     Promise.all([
-      request.post('/api/episodes').set('token',testToken).send(testEpisode),
-      request.post('/api/episodes').set('token',testToken).send(testEpisode1)
+      request.post('/api/users').send(testUser),
+      request.post('/api/users').send(testUser1)
     ])
     .then( result => {
-      testEpisode = JSON.parse(result[0].text);
-      testEpisode1 = JSON.parse(result[1].text);
+      testUser = JSON.parse(result[0].text);
+      testUser1 = JSON.parse(result[1].text);
       done();
     })
     .catch( err => {
-      console.log('before episode err:',err.response.text);
+      console.log('before user err:',err);
       done(err);
     });
   });
 
   it('/GET on root route returns all', done => {
     request
-      .get('/api/episodes')
+      .get('/api/users')
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
@@ -46,55 +44,52 @@ describe('episode endpoints', () => {
       });
   });
 
-  it('/GET on episode id returns episode data', done => {
+  it('/GET on user id returns user data', done => {
     request
-      .get(`/api/episodes/${testEpisode1._id}`)
+      .get(`/api/users/${testUser1._id}`)
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
         let result = JSON.parse(res.text);
-        assert.deepEqual(result, testEpisode1);
+        assert.deepEqual(result, testUser1);
         done();
       });
   });
 
   it('/POST method completes successfully', done => {
     request
-      .post('/api/episodes')
-      .set('token',testToken)
-      .send(testEpisode2)
+      .post('/api/users')
+      .send(testUser2)
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
         let result = JSON.parse(res.text);
-        assert.equal(result.title, testEpisode2.title);
-        assert.equal(result.length, testEpisode2.length);
-        testEpisode2 = result;
+        assert.equal(result.username, testUser2.username);
+        assert.notEqual(result.password, testUser2.password); // store hashes, not plaintext passwords
+        testUser2 = result;
         done();
       });
   });
 
   it('/POST validates title property', done => {
     request
-      .post('/api/episodes')
-      .set('token',testToken)
-      .send(testBadEpisode)
+      .post('/api/users')
+      .send(testBadUser)
       .end((err, res) => {
         if (!err) return done(res);
         assert.equal(res.statusCode, 400);
         assert.include(res.header['content-type'], 'application/json');
         let result = JSON.parse(res.text);
-        assert.notEqual(result.length, testBadEpisode.length);
+        assert.notEqual(result.password, testBadUser.password);
         done();
       });
   });
 
   it('/POST method gives error with bad json in request', done => {
     request
-      .post('/api/episodes')
-      .set('token',testToken)
+      .post('/api/users')
       .send('{"invalid"}')
       .end( (err,res) => {
         if(err) {
@@ -109,52 +104,50 @@ describe('episode endpoints', () => {
   });
 
   it('/PUT method completes successfully', done => {
-    testEpisode.title = 'test-put';
-    const putUrl = `/api/episodes/${testEpisode._id}`;
+    testUser.username = 'Adama';
+    const putUrl = `/api/users/${testUser._id}`;
     request
       .put(putUrl)
-      .set('token',testToken)
-      .send(testEpisode)
+      .send(testUser)
       .end((err, res) => {
         if (err) return done(err);
         let result = JSON.parse(res.text);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
-        assert.equal(result.title, testEpisode.title, JSON.stringify(result));
+        assert.equal(result.username, testUser.username, JSON.stringify(result));
         done();
       });
   });
 
-  it('/GET on recently updated episode returns correct changes', done => {
+  it('/GET on recently updated user returns correct changes', done => {
     request
-      .get(`/api/episodes/${testEpisode._id}`)
+      .get(`/api/users/${testUser._id}`)
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
         let result = JSON.parse(res.text);
-        assert.equal(result.title, testEpisode.title, res.text);
+        assert.equal(result.username, testUser.username, res.text);
         done();
       });
   });
 
-  it('/DELETE method removes episode', done => {
+  it('/DELETE method removes user', done => {
     request
-      .delete(`/api/episodes/${testEpisode._id}`)
-      .set('token',testToken)
+      .delete(`/api/users/${testUser._id}`)
       .end((err, res) => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
         let result = JSON.parse(res.text);
-        assert.deepEqual(result, testEpisode);
+        assert.deepEqual(result, testUser);
         done();
       });
   });
 
-  it('/GET on recently deleted episode returns no data', done => {
+  it('/GET on recently deleted user returns no data', done => {
     request
-      .get(`/api/episodes/${testEpisode._id}`)
+      .get(`/api/users/${testUser._id}`)
       .end((err, res) => {
         assert.equal(res.header['content-length'], 0);
         done();
@@ -168,7 +161,7 @@ describe('episode endpoints', () => {
         if (err) return done(err);
         assert.equal(res.statusCode, 200);
         assert.include(res.header['content-type'], 'application/json');
-        assert.include(res.text, 'GET /api/episodes');
+        assert.include(res.text, 'GET /api/users');
         done();
       });
   });
@@ -186,8 +179,8 @@ describe('episode endpoints', () => {
   // cleanup
   after( done => {
     Promise.all([
-      request.delete(`/api/episodes/${testEpisode1._id}`).set('token',testToken),
-      request.delete(`/api/episodes/${testEpisode2._id}`).set('token',testToken)
+      request.delete(`/api/users/${testUser1._id}`),
+      request.delete(`/api/users/${testUser2._id}`)
     ])
     .then( () => done() )
     .catch(done);
