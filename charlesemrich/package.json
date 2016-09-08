@@ -1,0 +1,29 @@
+{
+  "name": "single-resource-redo",
+  "version": "1.0.0",
+  "description": "TODO: Write a project description",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "watch": "nodemon --exec mocha"
+  },
+  "author": "Charles Emrich <charles.emrich@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "jsonwebtoken": "^7.1.7",
+    "mongoose": "^4.5.8",
+    "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.0.1"
+  }
+}
