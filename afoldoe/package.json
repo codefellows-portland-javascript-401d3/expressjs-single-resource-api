@@ -1,0 +1,38 @@
+{
+  "name": "expressjs-single-resource-api",
+  "version": "1.0.0",
+  "description": "Data store with expressJS",
+  "main": "server.js",
+  "scripts": {
+    "pretest": "eslint *.js",
+    "dev": "env $(cat .env) nodemon server.js",
+    "test": "mocha",
+    "start": "env $(cat .env) node server.js",
+    "watch": "mocha -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afoldoe/expressjs-single-resource-api.git"
+  },
+  "author": "Arielle Foldoe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afoldoe/expressjs-single-resource-api/issues"
+  },
+  "homepage": "https://github.com/afoldoe/expressjs-single-resource-api#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.1.1",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "jsonwebtoken": "^7.1.7",
+    "mongoose": "^4.5.7",
+    "morgan": "^1.7.0"
+  }
+}
